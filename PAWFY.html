@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Pawfy — Care with Heart</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"/>
+
+<style>
+@font-face {
+  font-family: 'Bip Hope';
+  src: local('Bip Hope'), local('Bip-Hope'), local('BIP HOPE'), local('biphope');
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#1e3a8a;--navy-light:#3b5bd6;
+  --coral:#f4522e;--coral-soft:#fff0ed;
+  --cream:#fdf6f0;--sky:#dbeafe;
+  --mint:#d1fae5;--mint-dark:#059669;
+  --amber:#fef3c7;--amber-dark:#d97706;
+  --lilac:#ede9fe;--lilac-dark:#7c3aed;
+  --bg:#f8f5f2;--white:#fff;
+  
+  --text-dark:#0f172a;
+  --text-mid:#27303f; 
+  --text-light:#4a5568; 
+  --border:#cbd5e1;
+  
+  --radius:22px;--radius-sm:15px;--radius-xs:10px;
+  --shadow:0 4px 20px rgba(15,23,42,0.06);
+  --shadow-md:0 10px 30px rgba(15,23,42,0.1);
+  --nav-h:76px;
+  --topnav-h:80px;
+  --transition:0.3s cubic-bezier(0.16,1,0.3,1);
+
+  --font-brand: 'Bip Hope', 'Fredoka', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+html,body{
+  height:100%;width:100%;overflow:hidden;
+  font-family:var(--font-body);background:#e8e4e0;
+  color:var(--text-dark);-webkit-font-smoothing:antialiased;
+}
+
+.app{
+  display:flex;flex-direction:column;height:100vh;max-width:430px;
+  margin:0 auto;background:var(--bg);position:relative;overflow:hidden;
+  box-shadow:0 0 60px rgba(0,0,0,0.3);
+}
+
+.topnav{
+  background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);
+  padding:0 18px;height:var(--topnav-h);display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid var(--border);
+  flex-shrink:0;position:relative;z-index:100;
+}
+.topnav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform 0.2s;}
+.topnav-logo:active{transform:scale(0.95);}
+
+.logo-container {
+  width:58px;height:58px;border-radius:14px;overflow:hidden;
+  box-shadow:0 4px 12px rgba(15,23,42,0.08);
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--border);
+}
+.logo-img { width:100%;height:100%;object-fit:contain; padding:4px; }
+
+.topnav-brand{display:flex;flex-direction:column;line-height:1.15;}
+.topnav-name{ font-family:var(--font-brand);font-size:24px;font-weight:700;color:var(--navy);letter-spacing: -0.3px; }
+.topnav-slogan{ font-family:var(--font-brand);font-size:10px;font-weight:600;color:var(--coral);text-transform:uppercase;letter-spacing:1px; }
+
+.topnav-right{display:flex;gap:8px;}
+.icon-btn{
+  width:40px;height:40px;background:var(--bg);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  cursor:pointer;border:none;position:relative;transition:all 0.2s;
+}
+.icon-btn:active{transform:scale(0.9);}
+.notif-dot{
+  width:8px;height:8px;background:var(--coral);border-radius:50%;
+  position:absolute;top:8px;right:8px;border:2px solid white;
+  animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+
+.pages{flex:1;position:relative;overflow:hidden;}
+.page{
+  position:absolute;inset:0;overflow-y:auto;display:none;
+  flex-direction:column;padding-bottom:calc(var(--nav-h)+24px);
+  -webkit-overflow-scrolling:touch;scroll-behavior:smooth;
+}
+.page.active{display:flex;}
+.page.slide-in{animation:slideIn 0.4s cubic-bezier(0.16,1,0.3,1) both;}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+
+.page-inner{padding:20px 16px;display:flex;flex-direction:column;gap:20px;min-height:101%;}
+
+.hero-wrap{position:relative;overflow:hidden;}
+.hero-banner{
+  background:linear-gradient(145deg,#1e3a8a 0%,#2563eb 60%,#3b82f6 100%);
+  border-radius:var(--radius);padding:26px 24px 20px;color:white;
+  position:relative;overflow:hidden;
+}
+.hero-banner::before{content:'';position:absolute;top:-30px;right:-20px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,0.07);}
+.hero-banner::after{content:'';position:absolute;bottom:-40px;right:30px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.hero-greeting{font-family:var(--font-brand);font-size:13px;font-weight:600;opacity:0.95;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;color:var(--sky);}
+.hero-title{font-family:var(--font-brand);font-size:28px;font-weight:700;line-height:1.25;margin-bottom:8px;}
+.hero-title em{font-style:normal;color:#93c5fd;}
+.hero-sub{font-size:14px;opacity:0.9;font-weight:500;line-height:1.6;}
+.hero-chips{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.hero-chip{
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,0.2);border-radius:20px;
+  padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;
+  transition:all 0.2s;font-family:var(--font-brand);
+}
+.hero-chip:hover{background:rgba(255,255,255,0.25);}
+
+.guest-nudge-card {
+  background: linear-gradient(135deg, var(--lilac), var(--sky));
+  border: 1.5px dashed var(--navy-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  animation: bounce-subtle 3s infinite ease-in-out;
+}
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.guest-nudge-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-brand);
+  font-size: 14px;
+  color: var(--navy);
+  font-weight: 700;
+}
+.guest-nudge-text {
+  font-size: 12px;
+  color: var(--text-mid);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.guest-nudge-btn {
+  align-self: flex-start;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: var(--font-brand);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.guest-nudge-btn:active {
+  transform: scale(0.95);
+}
+
+.gallery-scroll{display:flex;gap:14px;overflow-x:auto;padding:8px 0 4px;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-behavior:smooth;}
+.gallery-scroll::-webkit-scrollbar{display:none;}
+.gallery-card{min-width:260px;height:180px;border-radius:18px;background:#e2e8f0;overflow:hidden;position:relative;scroll-snap-align:start;box-shadow:var(--shadow-md);flex-shrink:0;cursor:pointer;}
+.gallery-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.gallery-card:active img{transform:scale(1.05);}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);}
+.gallery-tag{position:absolute;bottom:14px;left:14px;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;color:var(--navy);font-family:var(--font-brand);}
+.gallery-dots{display:flex;gap:6px;justify-content:center;margin-top:10px;}
+.g-dot{width:6px;height:6px;border-radius:3px;background:var(--border);transition:all 0.3s;}
+.g-dot.active{width:18px;background:var(--navy);}
+
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.stat-card{background:white;border-radius:var(--radius-sm);padding:14px 12px;box-shadow:var(--shadow);text-align:center;border:1px solid transparent;transition:all 0.2s;}
+.stat-card:active{transform:scale(0.96);}
+.stat-card .s-icon{font-size:22px;margin-bottom:6px;}
+.stat-card .s-val{font-size:20px;font-weight:700;color:var(--navy);font-family:var(--font-brand);}
+.stat-card .s-lbl{font-size:11px;font-weight:700;color:var(--text-light);margin-top:2px;}
+
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.svc-btn{
+  background:white;border-radius:var(--radius-sm);padding:14px 6px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;
+  box-shadow:var(--shadow);border:1.5px solid transparent;transition:all 0.2s;
+  position:relative;overflow:hidden;
+}
+.svc-btn:active{transform:scale(0.92);}
+.svc-btn.featured{background:linear-gradient(135deg,var(--coral),#ff7043);color:white;box-shadow:0 6px 20px rgba(244,82,46,0.3);border:none;}
+.svc-btn.featured .svc-name{color:white;}
+.svc-icon{width:44px;height:44px;background:var(--sky);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.svc-btn.featured .svc-icon{background:rgba(255,255,255,0.2);}
+.svc-name{font-size:11px;font-weight:700;text-align:center;color:var(--text-dark);font-family:var(--font-brand);}
+
+.section-hdr{display:flex;justify-content:space-between;align-items:center;}
+.section-hdr h3{font-family:var(--font-brand);font-size:19px;font-weight:700;color:var(--navy);letter-spacing:-0.2px;}
+.section-hdr a{font-size:12px;font-weight:700;color:var(--coral);cursor:pointer;background:var(--coral-soft);padding:5px 12px;border-radius:8px;font-family:var(--font-brand);}
+
+.card{background:white;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);}
+
+.schedule-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.schedule-item:last-child{border-bottom:none;}
+.sch-time{min-width:52px;text-align:center;}
+.sch-time .time-val{font-size:14px;font-weight:700;color:var(--navy);font-family:var(--font-brand);}
+.sch-time .time-am{font-size:10px;font-weight:600;color:var(--text-light);font-family:var(--font-brand);}
+.sch-divider{width:1px;height:40px;background:var(--border);}
+.sch-info{flex:1;}
+.sch-title{font-size:14px;font-weight:700;color:var(--text-dark);}
+.sch-sub{font-size:11px;color:var(--text-light);font-weight:600;margin-top:2px;}
+.sch-badge{font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;font-family:var(--font-brand);}
+.badge-vet{background:var(--coral-soft);color:var(--coral);}
+.badge-grooming{background:var(--lilac);color:var(--lilac-dark);}
+
+/* GUEST WELCOME SCREEN elements */
+.guest-profile-gate {
+  text-align: center;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.guest-profile-icon {
+  font-size: 64px;
+  animation: wobble 3s infinite;
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+.guest-profile-title {
+  font-family: var(--font-brand);
+  font-size: 24px;
+  color: var(--navy);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.guest-perks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  background: white;
+  padding: 18px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+}
+.guest-perk {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-mid);
+  line-height: 1.4;
+}
+.guest-perk-emoji {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.cat-scroll{display:flex;gap:12px;overflow-x:auto;padding:4px 0;scrollbar-width:none;}
+.cat-scroll::-webkit-scrollbar{display:none;}
+.cat-pill{
+  background:white;border-radius:var(--radius-sm);padding:14px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  min-width:100px;flex-shrink:0;box-shadow:var(--shadow);cursor:pointer;
+  transition:all 0.2s;border:2px solid transparent;
+}
+.cat-pill:active{transform:scale(0.94);}
+.cat-pill-icon{font-size:36px;}
+.cat-pill-name{font-size:13px;font-weight:700;color:var(--navy);font-family:var(--font-brand);}
+.cat-pill-breed{font-size:10px;font-weight:600;color:var(--text-light);text-align:center;}
+.cat-add-pill{
+  background:none;border:2.5px dashed var(--border);border-radius:var(--radius-sm);
+  padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  min-width:80px;flex-shrink:0;cursor:pointer;transition:all 0.2s;color:var(--text-light);
+  justify-content:center;
+}
+
+.regional-scroll {display:flex;gap:10px;overflow-x:auto;padding:4px 0;scrollbar-width:none;}
+.regional-scroll::-webkit-scrollbar {display:none;}
+.region-pill {
+  background:white;color:var(--text-mid);border:1.5px solid var(--border);
+  border-radius:30px;padding:8px 18px;font-size:12px;font-weight:700;
+  white-space:nowrap;cursor:pointer;transition:all 0.2s;
+  font-family:var(--font-brand);
+}
+.region-pill.active {
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+  color:white;border-color:var(--navy);box-shadow:0 4px 12px rgba(30,58,138,0.2);
+}
+
+.hotel-card{
+  background:white;border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);margin-bottom:20px;border:1px solid var(--border);
+  transition:transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+}
+.hotel-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.hotel-img-wrapper{position:relative;height:210px;overflow:hidden;background:#e2e8f0;}
+.hotel-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;}
+.hotel-card:hover .hotel-img{transform:scale(1.08);}
+.hotel-badge{
+  position:absolute;top:12px;right:12px;background:var(--coral);color:white;
+  font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;
+  box-shadow:0 4px 10px rgba(244,82,46,0.3);letter-spacing:0.5px;
+  font-family:var(--font-brand);
+}
+.hotel-body{padding:18px;}
+.hotel-name{font-family:var(--font-brand);font-size:20px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.hotel-desc{font-size:13px;color:var(--text-mid);line-height:1.65; margin-bottom:12px;font-weight:500;}
+.hotel-feats{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 16px;}
+.hotel-feat{font-size:10px;font-weight:700;background:var(--sky);color:var(--navy);padding:4px 10px;border-radius:8px;font-family:var(--font-brand);}
+.hotel-feat.premium-feat{background:var(--lilac);color:var(--lilac-dark);}
+.hotel-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:14px;}
+.hotel-price{font-size:20px;font-weight:700;color:var(--navy);font-family:var(--font-brand);}
+.hotel-price span{font-size:11px;font-weight:600;color:var(--text-light);margin-left:2px;}
+.book-btn{
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));color:white;
+  border:none;padding:12px 22px;border-radius:12px;font-weight:700;font-size:13px;
+  cursor:pointer;font-family:var(--font-brand);box-shadow:0 4px 12px rgba(30,58,138,0.2);
+  transition:all 0.2s;
+}
+.book-btn:active{transform:scale(0.95);opacity:0.9;}
+
+.bottom-nav{
+  height:var(--nav-h);background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 8px 10px;border-top:1px solid var(--border);
+  flex-shrink:0;position:relative;z-index:100;
+}
+.nav-tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;border:none;background:none;padding:8px 4px;
+  transition:all 0.2s;border-radius:12px;
+}
+.nav-tab:active{transform:scale(0.9);}
+.nav-icon{font-size:22px;transition:transform 0.3s;}
+.nav-label{font-size:11px;font-weight:700;color:var(--text-light);transition:color 0.2s;font-family:var(--font-brand);}
+.nav-tab.active .nav-label{color:var(--navy);font-weight:700;}
+.nav-tab.active .nav-icon{transform:scale(1.15);}
+.nav-fab{
+  background:linear-gradient(135deg,var(--coral),#ff6b47);
+  width:58px;height:58px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  margin-top:-20px;box-shadow:0 8px 24px rgba(244,82,46,0.4);
+  border:4px solid var(--bg);cursor:pointer;transition:all 0.3s;flex-shrink:0;
+}
+.nav-fab:active{transform:scale(0.88);}
+
+.page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.page-heading{font-family:var(--font-brand);font-size:25px;font-weight:700;color:var(--navy);letter-spacing:-0.5px;}
+.back-btn{font-size:12px;font-weight:700;color:var(--coral);cursor:pointer;background:var(--coral-soft);padding:8px 14px;border-radius:10px;transition:0.2s;font-family:var(--font-brand);}
+.back-btn:active{transform:scale(0.95);}
+.btn-primary{
+  width:100%;padding:16px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+  color:white;font-weight:700;font-size:15px;cursor:pointer;
+  box-shadow:0 6px 16px rgba(30,58,138,0.3);font-family:var(--font-brand);
+  transition:all 0.2s;letter-spacing:0.5px;
+}
+.btn-primary:active{transform:scale(0.98);}
+.btn-coral{background:linear-gradient(135deg,var(--coral),#ff6b47);box-shadow:0 6px 16px rgba(244,82,46,0.3);}
+
+.form-group{margin-bottom:16px;}
+.form-label{font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;margin-bottom:6px;display:block;letter-spacing:0.7px;font-family:var(--font-brand);}
+.form-input{
+  width:100%;padding:13px 14px;border-radius:12px;
+  border:1.5px solid var(--border);font-family:var(--font-body);
+  font-size:14px;font-weight:600;outline:none;background:var(--bg);
+  color:var(--text-dark);transition:all 0.2s;
+}
+.form-input:focus{border-color:var(--navy);background:white;box-shadow:0 0 0 3px rgba(30,58,138,0.08);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+.pet-full-card{
+  background:white;border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow);display:flex;align-items:flex-start;gap:16px;
+  border:1px solid transparent;transition:all 0.2s;position:relative;overflow:hidden;
+  cursor:pointer;
+}
+.pet-full-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sky);transition:0.2s;}
+.pet-full-card:active{transform:scale(0.99);}
+.pet-avatar{width:70px;height:70px;border-radius:16px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:40px;flex-shrink:0;border:2px solid var(--border);}
+.pet-meta{flex:1;}
+.pet-name{font-size:19px;font-weight:700;color:var(--navy);margin-bottom:2px;font-family:var(--font-brand);}
+.pet-breed{font-size:12px;color:var(--text-light);font-weight:700;margin-bottom:10px;}
+.pet-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.pet-tag{font-size:11px;font-weight:700;padding:4px 9px;border-radius:7px;font-family:var(--font-brand);}
+.pt-gender{background:var(--lilac);color:var(--lilac-dark);}
+.pt-age{background:var(--mint);color:var(--mint-dark);}
+.pt-weight{background:var(--amber);color:var(--amber-dark);}
+.pt-neutered{background:var(--coral-soft);color:var(--coral);}
+
+.health-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.health-row:last-child{border-bottom:none;}
+.h-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.h-dot.done{background:var(--mint-dark);}
+.h-dot.due{background:var(--amber-dark);}
+.h-dot.urgent{background:var(--coral);}
+.h-info{flex:1;}
+.h-name{font-size:14px;font-weight:700;color:var(--text-dark);}
+.h-date{font-size:11px;color:var(--text-light);font-weight:600;}
+.h-status{font-size:10px;font-weight:700;padding:3px 8px;border-radius:7px;font-family:var(--font-brand);}
+.h-done{background:var(--mint);color:var(--mint-dark);}
+.h-due{background:var(--amber);color:var(--amber-dark);}
+.h-urgent{background:var(--coral-soft);color:var(--coral);}
+
+.vet-card{background:white;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;gap:14px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;}
+.vet-card:active{transform:scale(0.99);}
+.vet-img{width:60px;height:60px;border-radius:14px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.vet-info{flex:1;}
+.vet-name{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:2px;font-family:var(--font-brand);}
+.vet-addr{font-size:12px;color:var(--text-light);font-weight:600;margin-bottom:8px;}
+.vet-meta{display:flex;gap:8px;flex-wrap:wrap;}
+.vet-m{font-size:10px;font-weight:700;padding:3px 8px;border-radius:7px;font-family:var(--font-brand);}
+.vm-open{background:var(--mint);color:var(--mint-dark);}
+.vm-dist{background:var(--sky);color:var(--navy);}
+.vm-24{background:var(--amber);color:var(--amber-dark);}
+.vet-rating{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:3px;font-family:var(--font-brand);}
+
+.chat-wrap{flex:1;display:flex;flex-direction:column;background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;min-height:500px;}
+.chat-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:white;}
+.ai-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-light));display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 10px rgba(30,58,138,0.3);}
+.ai-info{flex:1; margin-left: 12px;}
+.ai-name{font-size:15px;font-weight:700;color:var(--navy);font-family:var(--font-brand);}
+.ai-status{font-size:11px;color:var(--mint-dark);font-weight:700;display:flex;align-items:center;gap:5px;font-family:var(--font-brand);transition: color 0.2s;}
+.ai-status::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--mint-dark);display:inline-block;}
+.ai-status.typing{color: var(--amber-dark);}
+.ai-status.typing::before{background: var(--amber-dark);}
+
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:300px;max-height:380px;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.msg{max-width:85%;display:flex;flex-direction:column;gap:3px;}
+.msg.user{align-self:flex-end;align-items:flex-end;}
+.msg.bot{align-self:flex-start;align-items:flex-start;}
+.msg-bubble{padding:11px 15px;border-radius:18px;font-size:13px;font-weight:600;line-height:1.5;}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:white;border-bottom-right-radius:5px;}
+.msg.bot .msg-bubble{background:var(--bg);color:var(--text-dark);border-bottom-left-radius:5px;border:1px solid var(--border);}
+.msg-time{font-size:10px;color:var(--text-light);font-weight:600;padding:0 4px;}
+.typing-bubble{padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:18px;border-bottom-left-radius:5px;display:flex;gap:5px;align-items:center;}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--text-light);animation:typingDot 1.4s infinite;}
+.typing-dot:nth-child(2){animation-delay:0.2s;}
+.typing-dot:nth-child(3){animation-delay:0.4s;}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+.chat-input-wrap{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end;}
+.chat-input{
+  flex:1;padding:11px 14px;border-radius:14px;border:1.5px solid var(--border);
+  font-family:var(--font-body);font-size:13px;font-weight:600;outline:none;
+  resize:none;min-height:44px;max-height:100px;background:var(--bg);
+  transition:border-color 0.2s;
+}
+.chat-input:focus{border-color:var(--navy);background:white;}
+.chat-send{
+  width:44px;height:44px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+  color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;transition:all 0.2s;
+}
+.chat-send:active{transform:scale(0.9);}
+.chat-send:disabled{opacity:0.5;cursor:not-allowed;}
+.quick-asks{padding:10px 16px 0;display:flex;gap:8px;flex-wrap:wrap;}
+.quick-ask{background:var(--sky);border:none;border-radius:20px;padding:7px 12px;font-size:11px;font-weight:700;color:var(--navy);cursor:pointer;font-family:var(--font-brand);transition:all 0.2s;}
+
+.profile-header-card{background:linear-gradient(145deg,var(--navy),var(--navy-light));border-radius:var(--radius);padding:28px 24px;color:white;text-align:center;position:relative;overflow:hidden;}
+.profile-header-card.premium {background:linear-gradient(135deg,#0d1b3e 0%,#1e3a8a 55%,#3b82f6 100%);border:1.5px solid rgba(255,255,255,0.25);box-shadow:0 10px 25px rgba(30,58,138,0.3);}
+.profile-header-card.premium::after {content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 45%,rgba(255,255,255,0.12) 50%,transparent 55%);transform:rotate(35deg);animation:holo-shine 6s infinite linear;pointer-events:none;}
+@keyframes holo-shine{0%{transform:translate(-30%,-30%) rotate(35deg);}100%{transform:translate(30%,30%) rotate(35deg);}}
+
+.profile-avatar{width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,0.15);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:40px;border:3px solid rgba(255,255,255,0.3);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+.profile-name{font-family:var(--font-brand);font-size:24px;font-weight:700;}
+.profile-email{font-size:13px;opacity:0.85;margin-top:4px;font-weight:600;}
+.profile-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;margin-top:12px;font-family:var(--font-brand);}
+
+.menu-list{background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.menu-item{display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s;}
+.menu-item:last-child{border-bottom:none;}
+.menu-item:active{background:var(--bg);}
+.menu-icon{width:38px;height:38px;border-radius:11px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.menu-text{flex:1;}
+.menu-title{font-size:14px;font-weight:700;color:var(--text-dark);font-family:var(--font-brand);}
+.menu-sub{font-size:11px;color:var(--text-light);font-weight:600;}
+.menu-arrow{font-size:16px;color:var(--text-light);}
+
+.auth-tabs{display:flex;background:var(--bg);padding:4px;border-radius:var(--radius-sm);margin-bottom:20px;}
+.auth-tab{flex:1;text-align:center;padding:12px;font-size:13px;font-weight:700;color:var(--text-light);cursor:pointer;border-radius:10px;transition:0.2s;font-family:var(--font-brand);}
+.auth-tab.active{background:white;color:var(--navy);box-shadow:var(--shadow);}
+.auth-form-card{display:none;}
+.auth-form-card.active{display:block;}
+
+.avatar-selector{display:flex;gap:10px;justify-content:center;margin:12px 0 16px;}
+.avatar-opt{width:46px;height:46px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:0.2s;}
+.avatar-opt.active{border-color:var(--coral);background:var(--coral-soft);transform:scale(1.1);}
+
+/* Toggle Switch */
+.toggle-switch {position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;}
+.toggle-switch input {opacity:0;width:0;height:0;}
+.toggle-slider {position:absolute;cursor:pointer;inset:0;background-color:var(--border);transition:.3s;border-radius:24px;}
+.toggle-slider:before {position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background-color:white;transition:.3s;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,0.15);}
+input:checked + .toggle-slider {background-color:var(--mint-dark);}
+input:checked + .toggle-slider:before {transform:translateX(20px);}
+
+.faq-item{border-bottom:1px solid var(--border);padding:4px 0;}
+.faq-item:last-child{border-bottom:none;}
+.faq-question{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 4px;font-weight:700;color:var(--navy);background:none;border:none;cursor:pointer;font-family:var(--font-brand);text-align:left;font-size:14px;}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s cubic-bezier(0.16,1,0.3,1);}
+.faq-answer p{padding:0 4px 14px;font-size:13px;color:var(--text-mid);line-height:1.6;}
+.faq-item.active .faq-icon{transform:rotate(45deg);color:var(--coral);}
+.faq-icon{transition:transform 0.2s;font-size:16px;color:var(--text-light);}
+
+/* Modals */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);display:none;align-items:flex-end;justify-content:center;z-index:1000;animation:modalBg 0.3s ease;}
+.modal-overlay.centered{align-items:center;padding:24px;}
+@keyframes modalBg{from{opacity:0;}to{opacity:1;}}
+.modal-box{background:white;width:100%;max-width:430px;border-radius:24px 24px 0 0;padding:28px 24px 40px;animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1);max-height:90vh;overflow-y:auto;}
+.modal-overlay.centered .modal-box{border-radius:24px;max-width:360px;text-align:center;padding:32px 28px;animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1);}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+@keyframes popIn{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 24px;}
+.modal-title{font-size:21px;font-weight:700;color:var(--navy);margin-bottom:20px;font-family:var(--font-brand);}
+
+.toast{
+  position:fixed;bottom:calc(var(--nav-h)+16px);left:50%;transform:translateX(-50%) translateY(100%);
+  background:var(--text-dark);color:white;padding:12px 24px;border-radius:14px;
+  font-size:13px;font-weight:700;z-index:2000;white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);max-width:380px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);font-family:var(--font-brand);
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+.svc-select-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:2px solid var(--border);cursor:pointer;transition:all 0.2s;font-size:14px;font-weight:700;}
+.svc-select-item.active-svc{border-color:var(--navy);background:var(--sky);}
+.svc-select-price{font-size:12px;font-weight:700;color:var(--coral);font-family:var(--font-brand);}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.summary-row:last-child{border-bottom:none;}
+.sr-label{font-size:12px;color:var(--text-light);font-weight:700;}
+.sr-val{font-size:13px;font-weight:900;color:var(--text-dark);}
+
+.step-indicator{display:flex;align-items:center;gap:0;margin-bottom:24px;}
+.step-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-light);flex-shrink:0;transition:all 0.3s;font-family:var(--font-brand);}
+.step-dot.done{background:var(--navy);border-color:var(--navy);color:white;}
+.step-dot.active{background:var(--coral);border-color:var(--coral);color:white;}
+.step-line{flex:1;height:2px;background:var(--border);}
+.step-line.done{background:var(--navy);}
+.booking-step{display:none;}
+.booking-step.active{display:block;}
+
+/* ══ PAWFY SHOP SYSTEM STYLE ══ */
+.shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.product-card { background: white; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); display: flex; flex-direction: column; transition: transform 0.2s; }
+.product-card:active { transform: scale(0.97); }
+.prod-img-wrap { height: 120px; background: #e2e8f0; position: relative; }
+.prod-img { width: 100%; height: 100%; object-fit: cover; }
+.prod-tag { position: absolute; top: 8px; left: 8px; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 12px; color: white; font-family: var(--font-brand); }
+.tag-starter { background: var(--navy); }
+.tag-merch { background: var(--lilac-dark); }
+.tag-pr { background: var(--coral); }
+.prod-body { padding: 10px; display: flex; flex-direction: column; flex: 1; }
+.prod-title { font-size: 13px; font-weight: 700; color: var(--text-dark); line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; }
+.prod-price { font-size: 14px; font-weight: 900; color: var(--coral); font-family: var(--font-brand); margin-top: auto; margin-bottom: 8px; }
+.add-to-cart-btn { width: 100%; padding: 8px; border: none; background: var(--bg); color: var(--navy); border-radius: 8px; font-size: 11px; font-weight: 800; cursor:pointer; font-family: var(--font-brand); transition: all 0.2s; border: 1px solid var(--navy); }
+.add-to-cart-btn:active { background: var(--navy); color: white; }
+.cart-badge-nav { position: relative; }
+.badge-count { position: absolute; top: -4px; right: -4px; background: var(--coral); color: white; font-size: 10px; font-weight: 900; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1.5px solid white; }
+.cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.cart-item:last-child { border-bottom: none; }
+.cart-item-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; background: #e2e8f0; }
+.cart-item-details { flex: 1; }
+.cart-item-title { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.cart-item-price { font-size: 12px; font-weight: 800; color: var(--coral); font-family: var(--font-brand); margin-top: 2px;}
+.cart-qty-control { display: flex; align-items: center; gap: 8px; background: var(--bg); padding: 4px 8px; border-radius: 8px; }
+.qty-btn { background: none; border: none; font-size: 14px; font-weight: 900; cursor: pointer; color: var(--navy); width: 20px; }
+.qty-val { font-size: 12px; font-weight: 800; color: var(--text-dark); }
+
+/* ══ NEW PROFESSIONAL PROFILE STYLE ELEMENTS ══ */
+.pm-card-visual {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 16px;
+}
+.pm-card-visual::after {
+  content: ''; position: absolute; top: -20%; right: -20%; width: 120px; height: 120px;
+  background: rgba(255,255,255,0.08); border-radius: 50%;
+}
+.pm-card-brand { font-family: var(--font-brand); font-size: 16px; letter-spacing: 1px; font-weight: 700; opacity: 0.95; }
+.pm-card-number { font-size: 19px; font-weight: 800; letter-spacing: 2px; margin: 20px 0 10px; font-family: monospace; }
+.pm-card-holder-row { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: 600; text-transform: uppercase; }
+
+.pm-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: var(--radius-xs); padding: 12px 14px; margin-bottom: 8px;
+}
+.pm-item-info { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.pm-item-emoji { font-size: 18px; }
+.pm-remove-btn { color: var(--coral); background: none; border: none; font-size: 12px; font-weight: 800; cursor: pointer; font-family: var(--font-brand); }
+
+.tx-history-list { display: flex; flex-direction: column; gap: 10px; max-height: 320px; overflow-y: auto; }
+.tx-card {
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px; display: flex; flex-direction: column; gap: 6px;
+}
+.tx-header-row { display: flex; justify-content: space-between; align-items: center; }
+.tx-id { font-size: 11px; font-weight: 700; color: var(--text-light); }
+.tx-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; font-family: var(--font-brand); }
+.tx-badge.done { background: var(--mint); color: var(--mint-dark); }
+.tx-badge.pending { background: var(--amber); color: var(--amber-dark); }
+.tx-badge.scheduled { background: var(--sky); color: var(--navy); }
+.tx-title { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.tx-footer-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
+.tx-date { font-size: 11px; font-weight: 600; color: var(--text-light); }
+.tx-amount { font-size: 13px; font-weight: 900; color: var(--coral); font-family: var(--font-brand); }
+
+.setting-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-bottom: 1.5px solid var(--bg);
+}
+.setting-toggle-row:last-child { border-bottom: none; }
+.setting-toggle-info { flex: 1; padding-right: 12px; }
+.setting-toggle-title { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+.setting-toggle-desc { font-size: 11px; color: var(--text-light); font-weight: 600; margin-top: 2px; line-height: 1.35; }
+
+@media(min-width:430px){.app{border-radius:0;}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ── TOP NAV HEADER ── -->
+  <header class="topnav">
+    <div class="topnav-logo" onclick="showPage('home')">
+      <div class="logo-container">
+        <img src="https://i.pinimg.com/736x/51/c9/b1/51c9b1830d822224dbfd0b002997bf06.jpg" alt="Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e3a8a/ffffff?text=Pawfy';">
+      </div>
+      <div class="topnav-brand">
+        <span class="topnav-name">Pawfy</span>
+        <span class="topnav-slogan">Care with Heart</span>
+      </div>
+    </div>
+    <div class="topnav-right">
+      <button class="icon-btn" onclick="showToast('Fitur pencarian segera hadir!')">🔍</button>
+      <button class="icon-btn cart-badge-nav" onclick="openCartModal()">🛒<div class="badge-count" id="cart-count">0</div></button>
+      <button class="icon-btn" id="notif-btn" onclick="openRemindersModal()">🔔<div class="notif-dot" id="notif-dot"></div></button>
+    </div>
+  </header>
+
+  <div class="pages">
+
+    <!-- ══════════ HOME PAGE ══════════ -->
+    <section class="page active" id="page-home">
+      <div class="page-inner">
+        <!-- HERO -->
+        <div class="hero-banner">
+          <div class="hero-greeting">Selamat Datang Kembali</div>
+          <h1 class="hero-title" id="home-greeting-text">Halo, <em>Paw Parents!</em> 🐾</h1>
+          <p class="hero-sub">Mochi dan Luna menunggu jadwal mereka hari ini. Jangan lupa cek!</p>
+          <div class="hero-chips">
+            <div class="hero-chip" style="background:white;color:var(--navy);font-weight:900;" onclick="showPage('booking')">📅 Buat Janji</div>
+            <div class="hero-chip" onclick="showPage('konsul')">🤖 Tanya PawBot</div>
+            <div class="hero-chip" onclick="showPage('hotel')">🏨 Inap Hotel</div>
+            <div class="hero-chip" onclick="showPage('shop')">🛍️ Pawfy Shop</div>
+          </div>
+        </div>
+
+        <!-- GUEST NUDGE CARD -->
+        <div class="guest-nudge-card" id="guest-home-nudge">
+          <div class="guest-nudge-header">
+            <span>🐾</span> Mode Tamu Aktif (Guest Mode)
+          </div>
+          <p class="guest-nudge-text">
+            Kamu bebas membuat reservasi & belanja produk! Tapi hubungkan akunmu sekarang ya agar riwayat anabulmu tidak hilang.
+          </p>
+          <button class="guest-nudge-btn" onclick="redirectToLogin()">Hubungkan Akun 🔑</button>
+        </div>
+
+        <!-- GALLERY -->
+        <div>
+          <div class="section-hdr" style="margin-bottom:12px">
+            <h3>Momen Anabul ✨</h3>
+            <a onclick="showToast('Galeri lengkap segera hadir!')">Lihat Semua</a>
+          </div>
+          <div class="gallery-scroll" id="gallery-scroll">
+            <div class="gallery-card" onclick="showToast('#HappyMochi 😸')">
+              <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80" alt="Mochi" onerror="this.src='https://placehold.co/600x400/1e3a8a/ffffff?text=Mochi'">
+              <div class="gallery-overlay"></div>
+              <span class="gallery-tag">#HappyMochi</span>
+            </div>
+            <div class="gallery-card" onclick="showToast('#SleepyLuna 😴')">
+              <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=600&q=80" alt="Luna" onerror="this.src='https://placehold.co/600x400/1e3a8a/ffffff?text=Luna'">
+              <div class="gallery-overlay"></div>
+              <span class="gallery-tag">#SleepyLuna</span>
+            </div>
+            <div class="gallery-card" onclick="showToast('#TobyPlay 🎉')">
+              <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=600&q=80" alt="Toby" onerror="this.src='https://placehold.co/600x400/1e3a8a/ffffff?text=Toby'">
+              <div class="gallery-overlay"></div>
+              <span class="gallery-tag">#TobyPlay</span>
+            </div>
+          </div>
+          <div class="gallery-dots">
+            <div class="g-dot active" id="dot-0"></div>
+            <div class="g-dot" id="dot-1"></div>
+            <div class="g-dot" id="dot-2"></div>
+          </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+          <div class="stat-card" onclick="showPage('pets')">
+            <div class="s-icon">🐱</div>
+            <div class="s-val" id="stat-cats-home">3</div>
+            <div class="s-lbl">Kucingku</div>
+          </div>
+          <div class="stat-card" onclick="showPage('booking')">
+            <div class="s-icon">📅</div>
+            <div class="s-val">2</div>
+            <div class="s-lbl">Jadwal</div>
+          </div>
+          <div class="stat-card" onclick="showPage('shop')">
+            <div class="s-icon">🛍️</div>
+            <div class="s-val">6</div>
+            <div class="s-lbl">Produk</div>
+          </div>
+        </div>
+
+        <!-- LAYANAN UTAMA -->
+        <div>
+          <div class="section-hdr" style="margin-bottom:12px">
+            <h3>Layanan Kami</h3>
+          </div>
+          <div class="services-grid">
+            <div class="svc-btn featured" onclick="showPage('booking')">
+              <div class="svc-icon">📅</div>
+              <div class="svc-name">Booking</div>
+            </div>
+            <div class="svc-btn" onclick="showPage('konsul')">
+              <div class="svc-icon">🤖</div>
+              <div class="svc-name">PawBot</div>
+            </div>
+            <div class="svc-btn" onclick="showPage('hotel')">
+              <div class="svc-icon">🏨</div>
+              <div class="svc-name">Pet Hotel</div>
+            </div>
+            <div class="svc-btn" onclick="showPage('shop')">
+              <div class="svc-icon">🛍️</div>
+              <div class="svc-name">Shop</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JADWAL AKTIF -->
+        <div>
+          <div class="section-hdr" style="margin-bottom:12px">
+            <h3>Jadwal Hari Ini</h3>
+            <a onclick="showPage('booking')">+ Tambah</a>
+          </div>
+          <div class="card">
+            <div class="schedule-item">
+              <div class="sch-time"><div class="time-val">10:00</div><div class="time-am">AM</div></div>
+              <div class="sch-divider"></div>
+              <div class="sch-info">
+                <div class="sch-title">Vaksin F3 — Mochi</div>
+                <div class="sch-sub">Dr. Sari Wulandari • Pawfy Clinic</div>
+              </div>
+              <span class="sch-badge badge-vet">Vet</span>
+            </div>
+            <div class="schedule-item">
+              <div class="sch-time"><div class="time-val">14:30</div><div class="time-am">PM</div></div>
+              <div class="sch-divider"></div>
+              <div class="sch-info">
+                <div class="sch-title">Grooming — Luna</div>
+                <div class="sch-sub">Pawfy BSD City</div>
+              </div>
+              <span class="sch-badge badge-grooming">Grooming</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAFTAR KUCING BERANDA -->
+        <div>
+          <div class="section-hdr" style="margin-bottom:12px">
+            <h3>Kucing Saya 🐱</h3>
+            <a onclick="showPage('pets')">Lihat Profil →</a>
+          </div>
+          <div class="cat-scroll" id="cat-scroll-home"></div>
+        </div>
+
+        <!-- NOTIFIKASI KESEHATAN -->
+        <div id="health-alert-home"></div>
+
+      </div>
+    </section>
+
+    <!-- ──══════════ BOOKING PAGE ══════════ -->
+    <section class="page" id="page-booking">
+      <div class="page-inner">
+        <div class="page-hdr">
+          <h2 class="page-heading">Buat Janji 📅</h2>
+          <div class="back-btn" onclick="showPage('home')">← Kembali</div>
+        </div>
+
+        <div class="step-indicator">
+          <div class="step-dot active" id="s1">1</div>
+          <div class="step-line" id="sl1"></div>
+          <div class="step-dot" id="s2">2</div>
+          <div class="step-line" id="sl2"></div>
+          <div class="step-dot" id="s3">3</div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="booking-step active" id="bstep-1">
+          <div class="card">
+            <div style="margin-bottom:20px">
+              <div style="font-size:15px;font-weight:900;color:var(--navy);margin-bottom:4px">Pilih Layanan</div>
+              <div style="font-size:12px;color:var(--text-light);font-weight:600">Layanan apa yang dibutuhkan anabulmu?</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px" id="service-list">
+              <div class="svc-select-item active-svc" data-svc="Konsultasi Umum" onclick="selectService(this)">
+                <span>💊</span><span style="flex:1">Konsultasi Umum</span><span class="svc-select-price">Rp 80.000</span>
+              </div>
+              <div class="svc-select-item" data-svc="Vaksinasi" onclick="selectService(this)">
+                <span>💉</span><span style="flex:1">Vaksinasi</span><span class="svc-select-price">Rp 120.000</span>
+              </div>
+              <div class="svc-select-item" data-svc="Grooming" onclick="selectService(this)">
+                <span>✂️</span><span style="flex:1">Grooming</span><span class="svc-select-price">Rp 95.000</span>
+              </div>
+              <div class="svc-select-item" data-svc="Rawat Inap" onclick="selectService(this)">
+                <span>🏥</span><span style="flex:1">Rawat Inap</span><span class="svc-select-price">Rp 250.000/hari</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px" onclick="bookingNext(2)">Pilih Dokter →</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="booking-step" id="bstep-2">
+          <div class="card">
+            <div style="margin-bottom:20px">
+              <div style="font-size:15px;font-weight:900;color:var(--navy);margin-bottom:4px">Pilih Dokter & Waktu</div>
+              <div style="font-size:12px;color:var(--text-light);font-weight:600">Pilih dokter dan jadwal yang tersedia</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Dokter Hewan</label>
+              <select class="form-input" id="b-doctor">
+                <option>Dr. Sari Wulandari (Spesialis Kucing)</option>
+                <option>Dr. Budi Hartono (Umum)</option>
+                <option>Dr. Melisa Putri (Dermatologi)</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Tanggal</label>
+                <input type="date" class="form-input" id="b-date" value="2026-05-14">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Jam</label>
+                <select class="form-input" id="b-time">
+                  <option>08:00</option><option>09:00</option><option>10:00</option>
+                  <option>11:00</option><option>13:00</option><option>14:00</option>
+                  <option>15:00</option><option>16:00</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pilih Kucing</label>
+              <select class="form-input" id="b-cat"></select>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:16px">
+            <button class="btn-primary" style="background:var(--bg);color:var(--navy);box-shadow:var(--shadow)" onclick="bookingNext(1)">← Kembali</button>
+            <button class="btn-primary" onclick="bookingNext(3)">Konfirmasi →</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="booking-step" id="bstep-3">
+          <div class="card" id="booking-summary">
+            <div style="text-align:center;padding:12px 0 20px">
+              <div style="font-size:48px;margin-bottom:10px">✅</div>
+              <div style="font-size:16px;font-weight:900;color:var(--navy);margin-bottom:4px">Konfirmasi Janji</div>
+              <div style="font-size:12px;color:var(--text-light);font-weight:600">Cek kembali sebelum mendaftar</div>
+            </div>
+            <div id="summary-content"></div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px" onclick="tryConfirmBooking()">🐾 Daftar Sekarang!</button>
+          <button class="btn-primary" style="background:var(--bg);color:var(--navy);box-shadow:var(--shadow);margin-top:8px" onclick="bookingNext(2)">← Edit</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PETS PAGE ══════════ -->
+    <section class="page" id="page-pets">
+      <div class="page-inner">
+        <div class="page-hdr">
+          <h2 class="page-heading">Profil Anabul 🐱</h2>
+          <div class="back-btn" onclick="showPage('home')">← Kembali</div>
+        </div>
+        <div id="full-cat-list" style="display:flex;flex-direction:column;gap:14px"></div>
+        <button class="btn-primary btn-coral" style="margin-top:12px;" onclick="openAddPet()">＋ Tambah Kucing Baru</button>
+      </div>
+    </section>
+
+    <!-- ══════════ PRO PET HOTEL PAGE ══════════ -->
+    <section class="page" id="page-hotel">
+      <div class="page-inner">
+        <div class="page-hdr">
+          <h2 class="page-heading">Pet Hotel 🏨</h2>
+          <div class="back-btn" onclick="showPage('home')">← Kembali</div>
+        </div>
+
+        <div style="margin-bottom:6px">
+          <div class="form-label">Pilih Wilayah Cabang Pawfy</div>
+          <div class="regional-scroll" id="hotel-region-filter">
+            <div class="region-pill active" onclick="setHotelRegion('semua', this)">🌍 Semua Cabang</div>
+            <div class="region-pill" onclick="setHotelRegion('bsd', this)">📍 BSD City</div>
+            <div class="region-pill" onclick="setHotelRegion('alsut', this)">📍 Alam Sutera</div>
+            <div class="region-pill" onclick="setHotelRegion('pik', this)">📍 PIK Jakarta</div>
+          </div>
+        </div>
+
+        <div style="background:var(--coral-soft); border:1px dashed var(--coral); border-radius:var(--radius-sm); padding:14px; margin-bottom:10px; font-size:12px; font-weight:700; color:var(--coral); line-height:1.4;">
+          🐱 <strong>Garansi Kenyamanan Pawfy:</strong> Pengawasan dokter hewan standby 24 jam, pembersihan ruang 2x sehari, air minum tersaring mengalir bebas, dan asuransi inap terpadu.
+        </div>
+
+        <div id="hotel-rooms-list">
+          <div class="hotel-card" data-region="bsd,alsut">
+            <div class="hotel-img-wrapper">
+              <img class="hotel-img" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=600&q=80" alt="Standard Cozy Room">
+              <span class="hotel-badge" style="background:var(--navy-light);">POPULER</span>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-name">Standard Cozy Cabana 🛌</div>
+              <p class="hotel-desc">Kabin personal semi-private berukuran 1x1m, dilengkapi kasur ortopedi busa memori empuk, sirkulasi udara optimal, dan mainan interaktif kucing agar bebas stres.</p>
+              <div style="font-size:11px; font-weight:800; color:var(--text-light); margin-bottom:6px">Tersedia di: <span style="color:var(--navy-light)">BSD City, Alam Sutera</span></div>
+              <div class="hotel-feats">
+                <span class="hotel-feat">❄️ AC Sentral</span>
+                <span class="hotel-feat">🍽️ Makan 2x/Hari</span>
+                <span class="hotel-feat">🎮 Sesi Main Mandiri</span>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-price">Rp 85.000<span>/malam</span></div>
+                <button class="book-btn" onclick="openBookHotel('Standard Cozy Cabana', 85000)">Pesan Kamar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card" data-region="alsut,pik">
+            <div class="hotel-img-wrapper">
+              <img class="hotel-img" src="https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=600&q=80" alt="Zen Garden Room">
+              <span class="hotel-badge" style="background:var(--mint-dark);">ALAM SEJUK</span>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-name">Zen Garden Oasis 🌿</div>
+              <p class="hotel-desc">Kamar eksklusif ramah cahaya alami dengan pemandangan vertikal wall-climbing, pancuran air terjun mini otomatis, dan terapi audio musik tenang untuk relaksasi penuh.</p>
+              <div style="font-size:11px; font-weight:800; color:var(--text-light); margin-bottom:6px">Tersedia di: <span style="color:var(--mint-dark)">Alam Sutera, PIK Jakarta</span></div>
+              <div class="hotel-feats">
+                <span class="hotel-feat">🌿 Taman Semi-Outdoor</span>
+                <span class="hotel-feat">💧 Water Fountain</span>
+                <span class="hotel-feat font-bold" style="color:var(--mint-dark)">🧴 Bebas Kutu</span>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-price">Rp 110.000<span>/malam</span></div>
+                <button class="book-btn" onclick="openBookHotel('Zen Garden Oasis', 110000)">Pesan Kamar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card" data-region="bsd,pik">
+            <div class="hotel-img-wrapper">
+              <img class="hotel-img" src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=600&q=80" alt="VIP Suite Room">
+              <span class="hotel-badge">PREMIUM VIP</span>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-name">VIP Royal Suite 👑</div>
+              <p class="hotel-desc">Kamar suite ultra mewah berpemanas termostat personal. Dilengkapi dengan akses live stream CCTV berkualitas tinggi HD 24/7 langsung ke aplikasi Anda, makanan gourmet premium, dan sesi spa.</p>
+              <div style="font-size:11px; font-weight:800; color:var(--text-light); margin-bottom:6px">Tersedia di: <span style="color:var(--coral)">BSD City, PIK Jakarta</span></div>
+              <div class="hotel-feats">
+                <span class="hotel-feat premium-feat">📹 CCTV Live 24/7</span>
+                <span class="hotel-feat premium-feat">🍽️ Makanan Gourmet 3x</span>
+                <span class="hotel-feat premium-feat">🛁 Spa & Grooming</span>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-price">Rp 150.000<span>/malam</span></div>
+                <button class="book-btn" style="background:linear-gradient(135deg, var(--coral), #ff6b47);" onclick="openBookHotel('VIP Royal Suite', 150000)">Pesan Kamar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ VET PAGE ══════════ -->
+    <section class="page" id="page-lokasi">
+      <div class="page-inner">
+        <div class="page-hdr">
+          <h2 class="page-heading">Vet Terdekat 📍</h2>
+          <div class="back-btn" onclick="showPage('home')">← Kembali</div>
+        </div>
+        <div class="card" style="display:flex;gap:10px;align-items:center;margin-bottom:4px">
+          <div style="font-size:20px">📍</div>
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:900;color:var(--navy);font-family:var(--font-brand);">Lokasi Kamu</div>
+            <div style="font-size:11px;color:var(--text-light);font-weight:600">BSD City, Tangerang Selatan</div>
+          </div>
+          <div style="font-size:11px;font-weight:800;color:var(--coral);cursor:pointer;font-family:var(--font-brand);" onclick="showToast('Integrasi GPS segera hadir!')">Ubah</div>
+        </div>
+        <div class="vet-card" onclick="showToast('Membuka peta Pawfy Clinic Center 🗺️')">
+          <div class="vet-img">🏥</div>
+          <div class="vet-info">
+            <div class="vet-name">Pawfy Clinic Center</div>
+            <div class="vet-addr">Jl. Raya BSD No.88, Serpong</div>
+            <div class="vet-meta">
+              <span class="vet-m vm-24">⏰ 24 Jam</span>
+              <span class="vet-m vm-dist">📍 0.8 km</span>
+              <span class="vet-m vm-open">✅ Buka</span>
+            </div>
+          </div>
+          <div class="vet-rating">⭐ 4.9</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ KONSUL / PAWBOT AI ══════════ -->
+    <section class="page" id="page-konsul">
+      <div class="page-inner" style="gap:12px">
+        <div class="page-hdr">
+          <h2 class="page-heading">PawBot 🤖</h2>
+          <div class="back-btn" onclick="showPage('home')">← Kembali</div>
+        </div>
+        <div class="chat-wrap">
+          <div class="chat-header">
+            <div style="display:flex; align-items:center;">
+              <div class="ai-avatar">🤖</div>
+              <div class="ai-info">
+                <div class="ai-name">PawBot</div>
+                <div class="ai-status" id="pawbot-status-indicator">Siap Membantu</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:center; padding-right:4px;">
+              <div style="font-size:20px;cursor:pointer" onclick="clearChat()" title="Hapus Obrolan">🗑️</div>
+            </div>
+          </div>
+
+          <div class="quick-asks">
+            <button class="quick-ask" onclick="quickAsk('Kucing saya susah pipis')">🚽 Susah Pipis</button>
+            <button class="quick-ask" onclick="quickAsk('Kucing bersin dan ingusan')">🤧 Flu Bersin</button>
+            <button class="quick-ask" onclick="quickAsk('Kucing lemas muntah kuning')">🤮 Muntah Kuning</button>
+          </div>
+          <div class="chat-msgs" id="chat-msgs"></div>
+          <div class="chat-input-wrap">
+            <textarea class="chat-input" id="chat-input" placeholder="Tanya tentang kesehatan kucingmu..." rows="1" onkeydown="chatKeyDown(event)" oninput="autoGrow(this)"></textarea>
+            <button class="chat-send" onclick="sendChat()" id="send-btn">➤</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PAWFY SHOP PAGE ══════════ -->
+    <section class="page" id="page-shop">
+      <div class="page-inner">
+        <div class="page-hdr">
+          <h2 class="page-heading">Pawfy Shop 🛍️</h2>
+          <div class="back-btn" onclick="showPage('home')">← Beranda</div>
+        </div>
+
+        <div>
+          <div class="form-label">Kategori Produk</div>
+          <div class="regional-scroll" id="shop-category-filter">
+            <div class="region-pill active" onclick="filterShopCategory('semua', this)">🌍 Semua</div>
+            <div class="region-pill" onclick="filterShopCategory('starter', this)">🐱 Starter Kit</div>
+            <div class="region-pill" onclick="filterShopCategory('merch', this)">👕 Merchandise</div>
+            <div class="region-pill" onclick="filterShopCategory('pr', this)">🎁 PR Package</div>
+          </div>
+        </div>
+
+        <div class="shop-grid" id="shop-products-container">
+          <!-- Di-render dinamis oleh JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PROFILE PAGE ══════════ -->
+    <section class="page" id="page-profile">
+      <div class="page-inner">
+        <div class="page-hdr">
+          <h2 class="page-heading">Akun Pawfy</h2>
+          <div class="back-btn" onclick="showPage('home')">← Kembali</div>
+        </div>
+
+        <!-- STAGE 1: Guest Welcome & Benefits Check -->
+        <div id="profile-guest-gate" class="guest-profile-gate">
+          <div class="guest-profile-icon">🔑</div>
+          <div class="guest-profile-title">
+            Buka Fitur Profil & Simpan Data Medis 🐾
+          </div>
+          <p style="font-size: 13px; color: var(--text-light); font-weight: 600; line-height: 1.6; margin-top: -6px;">
+            Daftar akun Pawfy sekarang untuk melacak pertumbuhan anabul dan menikmati akses penuh.
+          </p>
+
+          <div class="guest-perks-list">
+            <div class="guest-perk">
+              <span class="guest-perk-emoji">💾</span>
+              <div>
+                <strong>Simpan Data Permanen</strong>
+                <p style="font-size:11px; color:var(--text-light); margin-top:2px;">Riwayat kesehatan, data imunisasi, & rekam medis kucing Anda tidak akan hilang.</p>
+              </div>
+            </div>
+            <div class="guest-perk">
+              <span class="guest-perk-emoji">👑</span>
+              <div>
+                <strong>Badge Premium Gratis</strong>
+                <p style="font-size:11px; color:var(--text-light); margin-top:2px;">Klaim keanggotaan VIP untuk diskon Pawfy Shop & promo Hotel khusus.</p>
+              </div>
+            </div>
+            <div class="guest-perk">
+              <span class="guest-perk-emoji">🔔</span>
+              <div>
+                <strong>Pengingat Otomatis</strong>
+                <p style="font-size:11px; color:var(--text-light); margin-top:2px;">Dapatkan notifikasi real-time untuk jadwal vaksinasi & grooming kucing Anda.</p>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary btn-coral" style="margin-top: 10px;" onclick="goToAuthTabs()">Daftar / Masuk Akun Sekarang 🐾</button>
+          <button class="btn-primary" style="background:var(--white); color:var(--navy); box-shadow:var(--shadow)" onclick="showPage('home')">Jelajahi Dulu Sebagai Tamu</button>
+        </div>
+
+        <!-- STAGE 2: Auth Tab (Forms) -->
+        <div id="auth-container" style="display:none;">
+          <div class="auth-tabs">
+            <div class="auth-tab active" id="tab-login" onclick="setAuthTab('login')">Masuk</div>
+            <div class="auth-tab" id="tab-register" onclick="setAuthTab('register')">Daftar Baru</div>
+          </div>
+
+          <div class="card auth-form-card active" id="form-login-card">
+            <div class="form-group">
+              <label class="form-label">Email / ID Akun</label>
+              <input type="email" id="login-email" class="form-input" placeholder="Contoh: parents@pawfy.id">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kata Sandi</label>
+              <input type="password" id="login-pass" class="form-input" placeholder="••••••••">
+            </div>
+            <button class="btn-primary" style="margin-top:8px" id="btn-submit-login" onclick="submitLogin()">Masuk Ke Akun</button>
+          </div>
+
+          <div class="card auth-form-card" id="form-register-card">
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" id="reg-name" class="form-input" placeholder="Contoh: Mamat">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Anda</label>
+              <input type="email" id="reg-email" class="form-input" placeholder="mamat@example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pilih Avatar Anabul Favorit</label>
+              <div class="avatar-selector">
+                <div class="avatar-opt active" data-avatar="🐱" onclick="selectRegAvatar(this)">🐱</div>
+                <div class="avatar-opt" data-avatar="🐈" onclick="selectRegAvatar(this)">🐈</div>
+                <div class="avatar-opt" data-avatar="😺" onclick="selectRegAvatar(this)">😺</div>
+                <div class="avatar-opt" data-avatar="🐾" onclick="selectRegAvatar(this)">🐾</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kata Sandi</label>
+              <input type="password" id="reg-pass" class="form-input" placeholder="Minimal 6 karakter">
+            </div>
+            <button class="btn-primary btn-coral" style="margin-top:8px" id="btn-submit-reg" onclick="submitRegister()">Buat Akun Sekarang 🐾</button>
+          </div>
+          
+          <button style="width:100%; border:none; background:none; padding:14px; font-size:13px; font-weight:800; color:var(--text-light); cursor:pointer; font-family:var(--font-brand);" onclick="cancelAuth()">← Kembali ke Gate Mode Tamu</button>
+        </div>
+
+        <!-- STAGE 3: Logged In Dashboard -->
+        <div id="profile-dashboard" style="display:none; flex-direction:column; gap:20px;">
+          <div class="profile-header-card premium">
+            <div class="profile-avatar" id="dash-avatar">👤</div>
+            <div class="profile-name" id="dash-name">Nama Pemilik</div>
+            <div class="profile-email" id="dash-email">email@pawfy.id</div>
+            <div class="profile-badge" id="dash-badge">⭐ Premium Member • ID #0000</div>
+          </div>
+
+          <!-- Primary App Modules Grid -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+            <div class="card" style="text-align:center; padding:16px; cursor:pointer;" onclick="openHistoryModal()">
+              <div style="font-size:24px; margin-bottom:6px;">📊</div>
+              <div style="font-size:12px; font-weight:800; color:var(--navy); font-family:var(--font-brand);">Riwayat Transaksi</div>
+              <div style="font-size:10px; color:var(--text-light); font-weight:600; margin-top:2px;">Reservasi & Belanja</div>
+            </div>
+            <div class="card" style="text-align:center; padding:16px; cursor:pointer;" onclick="openPaymentsModal()">
+              <div style="font-size:24px; margin-bottom:6px;">💳</div>
+              <div style="font-size:12px; font-weight:800; color:var(--navy); font-family:var(--font-brand);">Metode Pembayaran</div>
+              <div style="font-size:10px; color:var(--text-light); font-weight:600; margin-top:2px;">GoPay, OVO & Kartu</div>
+            </div>
+          </div>
+
+          <!-- Settings list -->
+          <div class="menu-list">
+            <div class="menu-item" onclick="showPage('pets')">
+              <div class="menu-icon">🐱</div>
+              <div class="menu-text">
+                <div class="menu-title">Profil Kucing Saya</div>
+                <div class="menu-sub">Kelola data pertumbuhan anabul</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+            
+            <div class="menu-item" onclick="openRemindersModal()">
+              <div class="menu-icon" style="background:var(--amber);">🔔</div>
+              <div class="menu-text">
+                <div class="menu-title">Pengingat & Notifikasi</div>
+                <div class="menu-sub">Kustom pengingat kesehatan WhatsApp</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item" onclick="openSupportModal()">
+              <div class="menu-icon" style="background:var(--mint);">💬</div>
+              <div class="menu-text">
+                <div class="menu-title">Pusat Bantuan & FAQ</div>
+                <div class="menu-sub">Hubungi Dokter Hewan Standby</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item" onclick="submitLogout()">
+              <div class="menu-icon" style="background:var(--coral-soft);">🚪</div>
+              <div class="menu-text">
+                <div class="menu-title" style="color:var(--coral)">Keluar dari Akun</div>
+                <div class="menu-sub">Log out dengan aman</div>
+              </div>
+              <div class="menu-arrow">›</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="nav-tab active" id="tab-home" onclick="showPage('home')"><span class="nav-icon">🏠</span><span class="nav-label">Beranda</span></div>
+    <div class="nav-tab" id="tab-konsul" onclick="showPage('konsul')"><span class="nav-icon">🤖</span><span class="nav-label">PawBot</span></div>
+    <div class="nav-fab" id="fab" onclick="showPage('booking')">📅</div>
+    <div class="nav-tab" id="tab-pets" onclick="showPage('pets')"><span class="nav-icon">🐱</span><span class="nav-label">Kucing</span></div>
+    <div class="nav-tab" id="tab-profile" onclick="showPage('profile')"><span class="nav-icon">👤</span><span class="nav-label">Profil</span></div>
+  </nav>
+</div>
+
+<!-- ══════════ MODALS ══════════ -->
+
+<!-- GUEST MODE INTERSTITIAL SIGN IN PROMPT -->
+<div class="modal-overlay centered" id="modal-signin-prompt">
+  <div class="modal-box">
+    <div style="font-size:64px;margin-bottom:16px;">💡</div>
+    <div class="modal-title" style="margin-bottom:8px">Simpan Riwayat Transaksi? 🐾</div>
+    <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.65;margin-bottom:20px;">
+      Kamu sedang berada di <strong>Mode Tamu</strong>. Yuk buat atau hubungkan akun Pawfy-mu sekarang agar jadwal & belanjaan anabulmu tercatat permanen dan aman!
+    </p>
+    <button class="btn-primary btn-coral" style="margin-bottom:10px" onclick="redirectToLoginFromPrompt()">Hubungkan Akun 🔑</button>
+    <button class="btn-primary" style="background:var(--bg);color:var(--navy);box-shadow:none;" id="btn-bypass-prompt" onclick="bypassSignInPrompt()">Tetap Lanjut Sebagai Tamu ➡️</button>
+  </div>
+</div>
+
+<div class="modal-overlay centered" id="modal-success">
+  <div class="modal-box">
+    <div style="font-size:64px;margin-bottom:16px;">🎉</div>
+    <div style="font-size:22px;font-weight:900;color:var(--navy);margin-bottom:8px;font-family:var(--font-brand);">Pendaftaran Berhasil!</div>
+    <p style="font-size:14px;color:var(--text-light);font-weight:600;line-height:1.6" id="success-msg"></p>
+    <button class="btn-primary" style="margin-top:24px" onclick="closeModal('modal-success')">Oke, Siap! 🐾</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-add-pet">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Daftarkan Kucing Baru 🐾</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Nama Panggilan</label><input type="text" id="new-cat-name" class="form-input" placeholder="Misal: Milo"></div>
+      <div class="form-group"><label class="form-label">Ras / Jenis</label><input type="text" id="new-cat-breed" class="form-input" placeholder="Misal: Anggora"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Umur</label><input type="text" id="new-cat-age" class="form-input" placeholder="2 tahun"></div>
+      <div class="form-group"><label class="form-label">Berat (kg)</label><input type="number" id="new-cat-weight" class="form-input" placeholder="3.5" step="0.1"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Jenis Kelamin</label>
+      <select class="form-input" id="new-cat-gender"><option>Jantan</option><option>Betina</option></select>
+    </div>
+    <button class="btn-primary btn-coral" onclick="saveCat()">Daftarkan Sekarang 🐾</button>
+    <button style="width:100%;border:none;background:none;padding:14px;font-size:14px;font-weight:800;color:var(--text-light);cursor:pointer;font-family:var(--font-brand);" onclick="closeModal('modal-add-pet')">Batal</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-pet-detail">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div id="pet-detail-content"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-book-hotel">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" style="margin-bottom:8px">Reservasi Pet Hotel 🏨</div>
+    <div id="hotel-selected-room" style="font-size:14px; color:var(--coral); font-weight:800; margin-bottom:12px; font-family:var(--font-brand);"></div>
+
+    <div class="form-group">
+      <label class="form-label">Pilih Cabang Wilayah</label>
+      <select class="form-input" id="hotel-branch-select" onchange="updateSelectedBranchDetail()">
+        <option value="bsd">BSD City — Serpong (Klinik Center)</option>
+        <option value="alsut">Alam Sutera — Tangerang (Petshop & Spa)</option>
+        <option value="pik">PIK — Jakarta Utara (Luxury Resort)</option>
+      </select>
+      <div id="hotel-branch-address" style="font-size:11px; font-weight:700; color:var(--text-light); margin-top:6px; line-height:1.3; background:var(--bg); padding:8px 12px; border-radius:8px;"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Pilih Kucing</label>
+      <select class="form-input" id="hotel-pet-select"></select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tanggal Masuk</label>
+        <input type="date" class="form-input" id="hotel-checkin" value="2026-05-14" onchange="calculateHotelPrice()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tanggal Keluar</label>
+        <input type="date" class="form-input" id="hotel-checkout" value="2026-05-17" onchange="calculateHotelPrice()">
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--bg); margin-bottom:20px; padding:14px;">
+      <div style="font-size:11px; font-weight:800; color:var(--text-light); text-transform:uppercase; margin-bottom:8px; font-family:var(--font-brand);">Kalkulasi Biaya</div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px; font-weight:700;">
+        <span id="hotel-calc-nights"></span>
+        <span id="hotel-calc-subtotal"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; border-top:1.5px solid var(--border); padding-top:8px;">
+        <span>Pajak & Layanan (10%)</span>
+        <span id="hotel-calc-tax"></span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:900; color:var(--navy); margin-top:8px; border-top:1.5px dashed var(--border); padding-top:8px; font-family:var(--font-brand);">
+        <span>Total Pembayaran</span>
+        <span id="hotel-calc-total"></span>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="tryConfirmHotelBooking()">Konfirmasi & Bayar Sekarang 🐾</button>
+    <button style="width:100%;border:none;background:none;padding:14px;font-size:14px;font-weight:800;color:var(--text-light);cursor:pointer;font-family:var(--font-brand);" onclick="closeModal('modal-book-hotel')">Batal</button>
+  </div>
+</div>
+
+<!-- SHOPPING CART MODAL -->
+<div class="modal-overlay" id="modal-cart">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Keranjang Belanja 🛒</div>
+    <div style="display:flex; flex-direction:column; gap:4px; max-height:260px; overflow-y:auto; margin-bottom:16px;" id="cart-items-container"></div>
+    <div class="card" style="background:var(--bg); margin-bottom:20px; padding:14px;">
+      <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:900; color:var(--navy); font-family:var(--font-brand);">
+        <span>Total Pembayaran</span>
+        <span id="cart-total-price">Rp 0</span>
+      </div>
+    </div>
+    <button class="btn-primary btn-coral" onclick="tryCheckoutCart()">Beli Sekarang 🐾</button>
+    <button style="width:100%; border:none; background:none; padding:14px; font-size:14px; font-weight:800; color:var(--text-light); cursor:pointer; font-family:var(--font-brand);" onclick="closeModal('modal-cart')">Kembali Belanja</button>
+  </div>
+</div>
+
+<!-- METODE PEMBAYARAN MODAL -->
+<div class="modal-overlay" id="modal-payments">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Metode Pembayaran 💳</div>
+    
+    <!-- Holographic Card visual for CC -->
+    <div class="pm-card-visual" id="active-card-visual">
+      <div class="pm-card-brand" id="active-card-brand">VISA PREMIUM</div>
+      <div class="pm-card-number" id="active-card-number">•••• •••• •••• 5642</div>
+      <div class="pm-card-holder-row">
+        <div>
+          <div style="opacity:0.6; font-size:8px;">Pemilik Kartu</div>
+          <div id="active-card-holder">PAW PARENTS</div>
+        </div>
+        <div style="text-align:right">
+          <div style="opacity:0.6; font-size:8px;">Berlaku S/D</div>
+          <div>12/29</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <div class="form-label">Metode Tersimpan</div>
+      <div id="payment-methods-list">
+        <!-- Di-render dinamis -->
+      </div>
+    </div>
+
+    <!-- Tambah kartu form collapsible -->
+    <div class="card" style="background:var(--bg); padding:14px; margin-bottom:16px;">
+      <div style="font-size:12px; font-weight:900; color:var(--navy); margin-bottom:10px; font-family:var(--font-brand);">＋ Tambah Kartu Kredit Baru</div>
+      <div class="form-group">
+        <input type="text" id="add-card-num" class="form-input" placeholder="Nomor Kartu (16 digit)" maxlength="16">
+      </div>
+      <div class="form-row">
+        <input type="text" id="add-card-expiry" class="form-input" placeholder="MM/YY" maxlength="5">
+        <input type="password" id="add-card-cvv" class="form-input" placeholder="CVV" maxlength="3">
+      </div>
+      <button class="btn-primary" style="padding:10px; font-size:12px; margin-top:10px;" onclick="saveNewCard()">Verifikasi & Simpan Kartu</button>
+    </div>
+
+    <button style="width:100%; border:none; background:none; padding:10px; font-size:13px; font-weight:800; color:var(--text-light); cursor:pointer; font-family:var(--font-brand);" onclick="closeModal('modal-payments')">Selesai</button>
+  </div>
+</div>
+
+<!-- PENGATURAN NOTIFIKASI & PENGINGAT MODAL -->
+<div class="modal-overlay" id="modal-reminders">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Pengingat & Notifikasi 🔔</div>
+    
+    <div class="card" style="padding:4px 16px; margin-bottom:16px;">
+      <div class="setting-toggle-row">
+        <div class="setting-toggle-info">
+          <div class="setting-toggle-title">Pengingat Jadwal Kegiatan 📅</div>
+          <div class="setting-toggle-desc">Ingatkan H-1 untuk janji klinik, jadwal grooming rutin, atau waktu pet hotel.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="noti-schedule" checked onchange="toggleReminderSetting('noti-schedule')">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div class="setting-toggle-info">
+          <div class="setting-toggle-title">WhatsApp Health Alert 💬</div>
+          <div class="setting-toggle-desc">Kirim jadwal vaksin, obat cacing langsung ke WhatsApp utama Anda.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="noti-wa" checked onchange="toggleReminderSetting('noti-wa')">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div class="setting-toggle-info">
+          <div class="setting-toggle-title">Pengingat Vaksin & Imunisasi 💉</div>
+          <div class="setting-toggle-desc">Ingatkan 3 hari sebelum waktu imunisasi tahunan anabul tiba.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="noti-vac" checked onchange="toggleReminderSetting('noti-vac')">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div class="setting-toggle-info">
+          <div class="setting-toggle-title">Tips Kesehatan Kucing Harian 🐾</div>
+          <div class="setting-toggle-desc">Terima tips gizi harian yang direkomendasikan dokter PawBot.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="noti-tips" onchange="toggleReminderSetting('noti-tips')">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div class="setting-toggle-info">
+          <div class="setting-toggle-title">Newsletter & Promo Belanja 🎁</div>
+          <div class="setting-toggle-desc">Dapatkan infomasi diskon pakan dan PR package eksklusif di Pawfy Shop.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="noti-promo" checked onchange="toggleReminderSetting('noti-promo')">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="closeModal('modal-reminders')">Simpan Preferensi</button>
+  </div>
+</div>
+
+<!-- RIWAYAT TRANSAKSI MODAL (HISTORY) -->
+<div class="modal-overlay" id="modal-history">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Riwayat Transaksi 📊</div>
+    
+    <div class="tx-history-list" id="tx-history-container">
+      <!-- Di-render dinamis -->
+    </div>
+
+    <button class="btn-primary" style="margin-top:20px;" onclick="closeModal('modal-history')">Kembali</button>
+  </div>
+</div>
+
+<!-- PUSAT BANTUAN & FAQ MODAL -->
+<div class="modal-overlay" id="modal-support">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Pusat Bantuan & FAQ 💬</div>
+    
+    <div class="card" style="background:var(--coral-soft); border:1.5px solid var(--coral); padding:16px; margin-bottom:16px; text-align:center;">
+      <div style="font-size:24px; margin-bottom:4px">⚠️</div>
+      <div style="font-size:14px; font-weight:800; color:var(--coral); font-family:var(--font-brand);">Butuh Darurat Medis?</div>
+      <p style="font-size:11px; color:var(--text-dark); margin:6px 0 12px; font-weight:600; line-height:1.4">Dokter hewan darurat Pawfy standby 24 jam untuk melayani konsultasi via telemedicine.</p>
+      <button class="btn-primary btn-coral" style="padding:10px; font-size:11px;" onclick="showToast('Menghubungkan ke Telemedis UGD Pawfy... 📞')">Hubungi Dokter Siaga</button>
+    </div>
+
+    <div class="form-label">Pertanyaan Umum (FAQ)</div>
+    <div class="card" style="padding:4px 16px; margin-bottom:16px;">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Apakah PawBot bisa meresepkan obat? <span class="faq-icon">＋</span></button>
+        <div class="faq-answer"><p>PawBot dirancang khusus untuk konsultasi awal & edukasi dasar perawatan. Untuk resep obat medis wajib melalui konsultasi dengan Dokter Hewan Pawfy.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Berapa lama batas inap di Pet Hotel? <span class="faq-icon">＋</span></button>
+        <div class="faq-answer"><p>Kucing kesayangan Anda dapat menginap mulai dari 1 malam hingga jangka panjang maksimal 30 hari kalender per sesi reservasi.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Metode pembayaran apa saja yang diterima? <span class="faq-icon">＋</span></button>
+        <div class="faq-answer"><p>Kami menerima Kartu Kredit/Debit utama, transfer bank instan, serta dompet digital seperti GoPay, OVO, Dana, dan ShopeePay.</p></div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="closeModal('modal-support')">Tutup Bantuan</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ══ SCRIPT SYSTEM ══ -->
+<script>
+// ══ DATABASE STORAGE ══
+let myCats = [
+  { name:'Mochi', breed:'Persia Mix', icon:'🐈', gender:'Jantan', age:'2 Tahun', weight:'4.2 kg', neutered:true,
+    health:[
+      {name:'Vaksin F3',date:'14 Mei 2026',status:'due'},
+      {name:'Obat Cacing',date:'20 Apr 2026',status:'done'}
+    ]},
+  { name:'Luna', breed:'Anggora', icon:'🐈‍⬛', gender:'Betina', age:'1.5 Tahun', weight:'3.8 kg', neutered:false,
+    health:[
+      {name:'Vaksin F3',date:'10 Apr 2026',status:'done'},
+      {name:'Grooming',date:'14 Mei 2026',status:'due'}
+    ]},
+  { name:'Toby', breed:'DSH (Domestic)', icon:'😺', gender:'Jantan', age:'3 Tahun', weight:'5.1 kg', neutered:true,
+    health:[
+      {name:'Obat Cacing',date:'18 Mei 2026',status:'urgent'}
+    ]}
+];
+
+// DATA PRODUK DENGAN URL GAMBAR TERBARU
+let shopProducts = [
+  { id: 'p1', name: 'Pawfy Kitten Starter Pack (Dry Food + Bowl)', price: 65000, category: 'starter', tag: 'STARTER KIT', className: 'tag-starter', img: 'https://asset.kompas.com/crops/WppfH5PgNzX1FV1H6q8HK8eYgqQ=/0x3:992x664/1200x800/data/photo/2022/02/14/620a5331a5c85.jpg', fallbackImg: 'https://asset.kompas.com/crops/WppfH5PgNzX1FV1H6q8HK8eYgqQ=/0x3:992x664/1200x800/data/photo/2022/02/14/620a5331a5c85.jpg' },
+  { id: 'p2', name: 'Litter Box Set + Serokan + Pasir Bentonit 5kg', price: 78000, category: 'starter', tag: 'STARTER KIT', className: 'tag-starter', img: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ5yVWHlv-i4aJcmlFxJtMLihKa3bNraVsl7jqe_tpPN1ECZoXm7pl6IoGUH1WXhNJCjL780x3IUD780x3IUDX7lslRNWIQcbLgTI170A', fallbackImg: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ5yVWHlv-i4aJcmlFxJtMLihKa3bNraVsl7jqe_tpPN1ECZoXm7pl6IoGUH1WXhNJCjL780x3IUDX7lslRNWIQcbLgTI170A' },
+  { id: 'p3', name: 'Sisir Ergonomis Anti Gumpal + Gunting Kuku', price: 35000, category: 'starter', tag: 'STARTER KIT', className: 'tag-starter', img: 'https://down-id.img.susercontent.com/file/id-11134207-81ztl-mfm9fq2159fw80', fallbackImg: 'https://down-id.img.susercontent.com/file/id-11134207-81ztl-mfm9fq2159fw80' },
+  { id: 'p4', name: 'Pawfy Exclusive Canvas Tote Bag - Off White', price: 49000, category: 'merch', tag: 'MERCHANDISE', className: 'tag-merch', img: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=400&q=80' },
+  { id: 'p5', name: 'Cozy Oversized Hoodie "Care with Heart" Navy', price: 185000, category: 'merch', tag: 'MERCHANDISE', className: 'tag-merch', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=400&q=80' },
+  { id: 'p6', name: 'Pawfy VIP Influencer PR Box (Gourmet Food + Merch)', price: 299000, category: 'pr', tag: 'PR PACKAGE', className: 'tag-pr', img: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=400&q=80' }
+];
+
+const branchAddresses = {
+  bsd: "📍 Jl. Raya BSD No.88, Serpong (Pawfy Clinic & Wellness Hub)",
+  alsut: "📍 Ruko Alam Sutera Blok B/12 (Pawfy Petshop & Grooming Center)",
+  pik: "📍 Pantai Indah Kapuk, Ruko Golf Island No.5 (Pawfy Premium Luxury Resort)"
+};
+
+let paymentMethods = [
+  { id: 'pm-1', type: 'gopay', name: 'GoPay Personal', details: 'Connected', icon: '📱', isDefault: true },
+  { id: 'pm-2', type: 'card', name: 'Visa Gold Corporate', details: '•••• •••• •••• 5642', icon: '💳', isDefault: false },
+  { id: 'pm-3', type: 'ovo', name: 'OVO Parents', details: 'Connected', icon: '🪙', isDefault: false }
+];
+
+let transactionHistory = [
+  { id: 'PFY-9824', type: 'Belanja', title: 'Pawfy Kitten Starter Pack', date: '25 Mei 2026', amount: 65000, status: 'done', statusLabel: 'Selesai' },
+  { id: 'PFY-7731', type: 'Klinik', title: 'Imunisasi Vaksin F3 — Mochi', date: '14 Mei 2026', amount: 120000, status: 'scheduled', statusLabel: 'Dijadwalkan' },
+  { id: 'PFY-1205', type: 'Hotel', title: 'Standard Cozy Cabana — Luna', date: '10 Mei 2026', amount: 255000, status: 'done', statusLabel: 'Selesai' }
+];
+
+let myCart = [];
+let currentUser = null; 
+let activeRegAvatar = '🐱';
+let selectedService = 'Konsultasi Umum';
+let currentBookingStep = 1;
+let chatHistory = [];
+let isChatLoading = false;
+let hotelCurrentRoom = '';
+let hotelCurrentRate = 0;
+let currentSelectedFilterRegion = 'semua';
+let pendingBypassAction = null; 
+
+// ══ PAGE NAVIGATION ══
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active','slide-in');});
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+
+  const target = document.getElementById('page-'+id);
+  if(!target) return;
+  target.scrollTop = 0;
+  target.classList.add('active','slide-in');
+
+  const tabMap = {home:'tab-home',pets:'tab-pets',profile:'tab-profile',konsul:'tab-konsul'};
+  const tab = document.getElementById(tabMap[id]);
+  if(tab) tab.classList.add('active');
+
+  const fab = document.getElementById('fab');
+  if(id==='booking'){fab.style.background='linear-gradient(135deg,var(--navy),var(--navy-light))';}
+  else{fab.style.background='linear-gradient(135deg,var(--coral),#ff6b47)';}
+
+  if(id==='pets'||id==='home') renderCats();
+  if(id==='booking') initBooking();
+  if(id==='konsul') initChat();
+  if(id==='shop') renderShop();
+  
+  if(id==='profile') updateProfilePageState();
+}
+
+function updateProfilePageState() {
+  const profileGuestGate = document.getElementById('profile-guest-gate');
+  const authContainer = document.getElementById('auth-container');
+  const profileDashboard = document.getElementById('profile-dashboard');
+
+  if (currentUser) {
+    profileGuestGate.style.display = 'none';
+    authContainer.style.display = 'none';
+    profileDashboard.style.display = 'flex';
+  } else {
+    profileGuestGate.style.display = 'flex';
+    authContainer.style.display = 'none';
+    profileDashboard.style.display = 'none';
+  }
+}
+
+function goToAuthTabs() {
+  document.getElementById('profile-guest-gate').style.display = 'none';
+  document.getElementById('auth-container').style.display = 'block';
+  setAuthTab('register');
+}
+
+function cancelAuth() {
+  document.getElementById('auth-container').style.display = 'none';
+  document.getElementById('profile-guest-gate').style.display = 'flex';
+}
+
+function redirectToLogin() {
+  showPage('profile');
+  goToAuthTabs();
+}
+
+function triggerSignInReminder(actionCallback) {
+  if (currentUser) {
+    actionCallback();
+  } else {
+    pendingBypassAction = actionCallback;
+    document.getElementById('modal-signin-prompt').style.display = 'flex';
+  }
+}
+
+function bypassSignInPrompt() {
+  document.getElementById('modal-signin-prompt').style.display = 'none';
+  if (pendingBypassAction) {
+    pendingBypassAction();
+    pendingBypassAction = null;
+  }
+}
+
+function redirectToLoginFromPrompt() {
+  document.getElementById('modal-signin-prompt').style.display = 'none';
+  redirectToLogin();
+}
+
+// ══ SHOP ENGINE ══
+function renderShop() {
+  displayProducts(shopProducts);
+}
+
+function displayProducts(products) {
+  const container = document.getElementById('shop-products-container');
+  if (!container) return;
+  container.innerHTML = products.map(p => {
+    const fallback = p.fallbackImg ? p.fallbackImg : 'https://placehold.co/300x200/1e3a8a/ffffff?text=Product';
+    return `
+      <div class="product-card">
+        <div class="prod-img-wrap">
+          <img class="prod-img" src="${p.img}" alt="${p.name}" onerror="this.onerror=null; this.src='${fallback}';">
+          <span class="prod-tag ${p.className}">${p.tag}</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-title">${p.name}</div>
+          <div class="prod-price">${formatRupiah(p.price)}</div>
+          <button class="add-to-cart-btn" onclick="addToCart('${p.id}')">🛒 + Keranjang</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterShopCategory(category, element) {
+  document.querySelectorAll('#shop-category-filter .region-pill').forEach(pill => pill.classList.remove('active'));
+  element.classList.add('active');
+  if (category === 'semua') { displayProducts(shopProducts); } 
+  else { displayProducts(shopProducts.filter(p => p.category === category)); }
+}
+
+function addToCart(productId) {
+  const existingItem = myCart.find(item => item.productId === productId);
+  if (existingItem) { existingItem.qty++; } 
+  else { myCart.push({ productId: productId, qty: 1 }); }
+  updateCartCountBadge();
+  showToast(`Berhasil masuk keranjang! 🛒`);
+}
+
+function updateCartCountBadge() {
+  document.getElementById('cart-count').textContent = myCart.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function openCartModal() {
+  renderCartItems();
+  document.getElementById('modal-cart').style.display = 'flex';
+}
+
+function renderCartItems() {
+  const container = document.getElementById('cart-items-container');
+  const totalText = document.getElementById('cart-total-price');
+  if (myCart.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-light); font-size:13px; font-weight:700;">Keranjang kosong 😿</div>`;
+    totalText.textContent = 'Rp 0';
+    return;
+  }
+  let totalPrice = 0;
+  container.innerHTML = myCart.map(item => {
+    const p = shopProducts.find(prod => prod.id === item.productId);
+    totalPrice += (p.price * item.qty);
+    const fallback = p.fallbackImg ? p.fallbackImg : 'https://placehold.co/300x200/1e3a8a/ffffff?text=Product';
+    return `
+      <div class="cart-item">
+        <img class="cart-item-img" src="${p.img}" alt="${p.name}" onerror="this.onerror=null; this.src='${fallback}';">
+        <div class="cart-item-details">
+          <div class="cart-item-title">${p.name}</div>
+          <div class="cart-item-price">${formatRupiah(p.price)}</div>
+        </div>
+        <div class="cart-qty-control">
+          <button class="qty-btn" onclick="changeCartQty('${p.id}', -1)">-</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeCartQty('${p.id}', 1)">+</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  totalText.textContent = formatRupiah(totalPrice);
+}
+
+function changeCartQty(productId, delta) {
+  const item = myCart.find(i => i.productId === productId);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { myCart = myCart.filter(i => i.productId !== productId); }
+  updateCartCountBadge();
+  renderCartItems();
+}
+
+function tryCheckoutCart() {
+  triggerSignInReminder(checkoutCart);
+}
+
+function checkoutCart() {
+  if (myCart.length === 0) return;
+  closeModal('modal-cart');
+  showToast('Memproses transaksi...');
+  
+  let totalPrice = 0;
+  myCart.forEach(item => {
+    const p = shopProducts.find(prod => prod.id === item.productId);
+    totalPrice += (p.price * item.qty);
+  });
+
+  setTimeout(() => {
+    const txId = 'PFY-' + Math.floor(10000 + Math.random() * 90000);
+    transactionHistory.unshift({
+      id: txId,
+      type: 'Belanja',
+      title: `Checkout ${myCart.length} Produk Belanjaan`,
+      date: 'Hari Ini',
+      amount: totalPrice,
+      status: 'pending',
+      statusLabel: 'Diproses'
+    });
+
+    document.getElementById('success-msg').innerHTML = `📦 Pembelian Berhasil!<br><br>Kode Order: <strong>${txId}</strong>.<br>Tim Pawfy Hub sedang mengemas pesananmu untuk segera dikirim ke alamat rumah.`;
+    myCart = [];
+    updateCartCountBadge();
+    document.getElementById('modal-success').style.display = 'flex';
+  }, 1200);
+}
+
+// ══ APPOINTMENT FLOW ══
+function initBooking(){ currentBookingStep = 1; updateStep(1); renderCats(); }
+function selectService(el){ document.querySelectorAll('.svc-select-item').forEach(i=>i.classList.remove('active-svc')); el.classList.add('active-svc'); selectedService = el.dataset.svc; }
+function bookingNext(step){ updateStep(step); }
+function updateStep(step){
+  currentBookingStep = step;
+  document.querySelectorAll('.booking-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('bstep-'+step).classList.add('active');
+  [1,2,3].forEach(i=>{ document.getElementById('s'+i).className = 'step-dot '+(i<step?'done':i===step?'active':''); });
+  [1,2].forEach(i=>{ document.getElementById('sl'+i).className = 'step-line '+(i<step?'done':''); });
+  if(step===3) buildSummary();
+}
+function buildSummary(){
+  const dr = document.getElementById('b-doctor')?.value||'Dr. Sari Wulandari';
+  const dt = document.getElementById('b-date')?.value||'2026-05-14';
+  const tm = document.getElementById('b-time')?.value||'10:00';
+  const ct = document.getElementById('b-cat')?.value||myCats[0]?.name;
+  const priceMap = {'Konsultasi Umum':'Rp 80.000','Vaksinasi':'Rp 120.000','Grooming':'Rp 95.000','Rawat Inap':'Rp 250.000/hari'};
+  document.getElementById('summary-content').innerHTML = `
+    <div class="summary-row"><span class="sr-label">Layanan</span><span class="sr-val">${selectedService}</span></div>
+    <div class="summary-row"><span class="sr-label">Dokter</span><span class="sr-val">${dr.split('(')[0].trim()}</span></div>
+    <div class="summary-row"><span class="sr-label">Tanggal</span><span class="sr-val">${dt}</span></div>
+    <div class="summary-row"><span class="sr-label">Jam</span><span class="sr-val">${tm} WIB</span></div>
+    <div class="summary-row"><span class="sr-label">Kucing</span><span class="sr-val">${ct}</span></div>
+    <div class="summary-row"><span class="sr-label">Estimasi</span><span class="sr-val" style="color:var(--coral)">${priceMap[selectedService]||'-'}</span></div>
+  `;
+}
+
+function tryConfirmBooking() {
+  triggerSignInReminder(confirmBooking);
+}
+
+function confirmBooking(){
+  const ct = document.getElementById('b-cat')?.value||myCats[0]?.name;
+  const priceMapNum = {'Konsultasi Umum': 80000,'Vaksinasi': 120000,'Grooming': 95000,'Rawat Inap': 250000};
+  const estCost = priceMapNum[selectedService] || 80000;
+  
+  closeModal('modal-add-pet');
+  
+  const txId = 'PFY-' + Math.floor(10000 + Math.random() * 90000);
+  transactionHistory.unshift({
+    id: txId,
+    type: 'Klinik',
+    title: `${selectedService} — ${ct}`,
+    date: document.getElementById('b-date')?.value || 'Hari Ini',
+    amount: estCost,
+    status: 'scheduled',
+    statusLabel: 'Dijadwalkan'
+  });
+
+  document.getElementById('success-msg').innerHTML = `${selectedService} untuk ${ct} berhasil terdaftar!<br><br>Kode Booking: <strong>${txId}</strong>.<br>Silakan datang tepat waktu dan tunjukkan kode booking ini ke resepsionis klinik.`;
+  document.getElementById('modal-success').style.display = 'flex';
+}
+
+// ══ PET HOTEL MODULE ══
+function setHotelRegion(region, element) {
+  currentSelectedFilterRegion = region;
+  document.querySelectorAll('#hotel-region-filter .region-pill').forEach(pill => pill.classList.remove('active'));
+  element.classList.add('active');
+  document.querySelectorAll('#hotel-rooms-list .hotel-card').forEach(card => {
+    const r = card.getAttribute('data-region').split(',');
+    card.style.display = (region === 'semua' || r.includes(region)) ? 'block' : 'none';
+  });
+}
+function openBookHotel(roomName, rate){
+  hotelCurrentRoom = roomName; hotelCurrentRate = rate;
+  document.getElementById('hotel-selected-room').innerHTML = `🏨 Inap: <strong>${roomName}</strong> (${formatRupiah(rate)}/malam)`;
+  updateSelectedBranchDetail(); renderCats(); calculateHotelPrice();
+  document.getElementById('modal-book-hotel').style.display = 'flex';
+}
+function updateSelectedBranchDetail() {
+  const v = document.getElementById('hotel-branch-select').value;
+  document.getElementById('hotel-branch-address').textContent = branchAddresses[v];
+}
+function calculateHotelPrice(){
+  const inD = new Date(document.getElementById('hotel-checkin').value);
+  const outD = new Date(document.getElementById('hotel-checkout').value);
+  if(outD <= inD) return;
+  const nights = Math.ceil(Math.abs(outD - inD) / (1000 * 60 * 60 * 24));
+  const sub = nights * hotelCurrentRate; const tax = Math.round(sub * 0.1);
+  document.getElementById('hotel-calc-nights').textContent = `${nights} Malam x ${formatRupiah(hotelCurrentRate)}`;
+  document.getElementById('hotel-calc-subtotal').textContent = formatRupiah(sub);
+  document.getElementById('hotel-calc-tax').textContent = formatRupiah(tax);
+  document.getElementById('hotel-calc-total').textContent = formatRupiah(sub + tax);
+}
+
+function tryConfirmHotelBooking() {
+  triggerSignInReminder(confirmHotelBooking);
+}
+
+function confirmHotelBooking(){
+  closeModal('modal-book-hotel');
+  showToast('Memproses Pembayaran...');
+  
+  const inD = new Date(document.getElementById('hotel-checkin').value);
+  const outD = new Date(document.getElementById('hotel-checkout').value);
+  const nights = Math.ceil(Math.abs(outD - inD) / (1000 * 60 * 60 * 24)) || 1;
+  const totalCost = Math.round((nights * hotelCurrentRate) * 1.1);
+
+  setTimeout(() => {
+    const txId = 'PFY-' + Math.floor(10000 + Math.random() * 90000);
+    transactionHistory.unshift({
+      id: txId,
+      type: 'Hotel',
+      title: `${hotelCurrentRoom} Inap`,
+      date: 'Hari Ini',
+      amount: totalCost,
+      status: 'pending',
+      statusLabel: 'Menunggu'
+    });
+
+    document.getElementById('success-msg').innerHTML = `🎉 Reservasi Hotel Berhasil!<br><br>Kode Reservasi: <strong>${txId}</strong>.<br>Layanan penjemputan anabul otomatis akan menghubungi Anda sesaat lagi.`;
+    document.getElementById('modal-success').style.display = 'flex';
+  }, 1200);
+}
+
+// ══ AUTH & PROFILE MANAGEMENT ══
+function setAuthTab(mode){
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.auth-form-card').forEach(f => f.classList.remove('active'));
+  if(mode === 'login'){ document.getElementById('tab-login').classList.add('active'); document.getElementById('form-login-card').classList.add('active'); } 
+  else { document.getElementById('tab-register').classList.add('active'); document.getElementById('form-register-card').classList.add('active'); }
+}
+function selectRegAvatar(el){ document.querySelectorAll('.avatar-opt').forEach(o => o.classList.remove('active')); el.classList.add('active'); activeRegAvatar = el.dataset.avatar; }
+
+function submitRegister(){
+  const n = document.getElementById('reg-name').value;
+  if(!n) return showToast('Lengkapi data! 😿');
+  currentUser = { name: n, email: document.getElementById('reg-email').value, avatar: activeRegAvatar, memberId: 'PFY-'+Math.floor(1000+Math.random()*9000) };
+  updateUserDashboard(); 
+  showToast('Pendaftaran Berhasil! 🐾');
+  showPage('home');
+}
+
+function submitLogin(){
+  const e = document.getElementById('login-email').value;
+  if(!e) return showToast('Masukkan email! 😿');
+  currentUser = { name: e.split('@')[0], email: e, avatar: '🐈', memberId: 'PFY-'+Math.floor(1000+Math.random()*9000) };
+  updateUserDashboard(); 
+  showToast('Berhasil Masuk! 💛');
+  showPage('home');
+}
+
+function updateUserDashboard(){
+  const guestHomeNudge = document.getElementById('guest-home-nudge');
+  if(currentUser){
+    document.getElementById('home-greeting-text').innerHTML = `Halo, <em>${currentUser.name}!</em> 🐾`;
+    document.getElementById('dash-avatar').textContent = currentUser.avatar;
+    document.getElementById('dash-name').textContent = currentUser.name;
+    document.getElementById('dash-email').textContent = currentUser.email;
+    document.getElementById('dash-badge').textContent = `⭐ Premium Member • ID #${currentUser.memberId}`;
+    
+    if (guestHomeNudge) guestHomeNudge.style.display = 'none';
+  } else {
+    document.getElementById('home-greeting-text').innerHTML = `Halo, <em>Paw Parents!</em> 🐾`;
+    if (guestHomeNudge) guestHomeNudge.style.display = 'flex';
+  }
+  updateProfilePageState();
+}
+
+function submitLogout(){ 
+  currentUser = null; 
+  updateUserDashboard(); 
+  showToast('Sesi Berakhir 👋'); 
+  showPage('home'); 
+}
+
+// ══ NEW PROFESSIONAL SETTINGS MODAL TRIGGERS ══
+function openPaymentsModal() {
+  renderPaymentMethods();
+  document.getElementById('modal-payments').style.display = 'flex';
+}
+
+function renderPaymentMethods() {
+  const container = document.getElementById('payment-methods-list');
+  if (!container) return;
+  container.innerHTML = paymentMethods.map(pm => `
+    <div class="pm-item" onclick="selectCardVisual('${pm.id}')">
+      <div class="pm-item-info">
+        <span class="pm-item-emoji">${pm.icon}</span>
+        <div>
+          <div style="font-weight:800;">${pm.name}</div>
+          <div style="font-size:10px; color:var(--text-light); font-weight:600;">${pm.details}</div>
+        </div>
+      </div>
+      <button class="pm-remove-btn" onclick="removePaymentMethod(event, '${pm.id}')">Hapus</button>
+    </div>
+  `).join('');
+}
+
+function selectCardVisual(id) {
+  const pm = paymentMethods.find(p => p.id === id);
+  if (!pm) return;
+  
+  const visual = document.getElementById('active-card-visual');
+  const brand = document.getElementById('active-card-brand');
+  const num = document.getElementById('active-card-number');
+  const holder = document.getElementById('active-card-holder');
+
+  if (pm.type === 'card') {
+    visual.style.background = 'linear-gradient(135deg, var(--navy), var(--navy-light))';
+    brand.textContent = 'VISA PREMIUM';
+    num.textContent = pm.details;
+    holder.textContent = currentUser ? currentUser.name.toUpperCase() : 'PAW PARENTS';
+  } else {
+    visual.style.background = 'linear-gradient(135deg, #4f46e5, #818cf8)';
+    brand.textContent = pm.name.toUpperCase();
+    num.textContent = 'Connected E-Wallet Account';
+    holder.textContent = currentUser ? currentUser.email.toUpperCase() : 'CONNECTED';
+  }
+  showToast(`Tampilan kartu diperbarui ke: ${pm.name}`);
+}
+
+function removePaymentMethod(event, id) {
+  event.stopPropagation();
+  paymentMethods = paymentMethods.filter(pm => pm.id !== id);
+  renderPaymentMethods();
+  showToast('Metode pembayaran dihapus 💳');
+}
+
+function saveNewCard() {
+  const numInput = document.getElementById('add-card-num').value.trim();
+  const expInput = document.getElementById('add-card-expiry').value.trim();
+  const cvvInput = document.getElementById('add-card-cvv').value.trim();
+
+  if (numInput.length < 16 || !expInput || !cvvInput) {
+    return showToast('Masukkan detail kartu kredit dengan benar! 💳');
+  }
+
+  const maskedNum = `•••• •••• •••• ${numInput.slice(-4)}`;
+  paymentMethods.push({
+    id: 'pm-' + Date.now(),
+    type: 'card',
+    name: 'Visa/Mastercard Saved',
+    details: maskedNum,
+    icon: '💳',
+    isDefault: false
+  });
+
+  document.getElementById('add-card-num').value = '';
+  document.getElementById('add-card-expiry').value = '';
+  document.getElementById('add-card-cvv').value = '';
+
+  renderPaymentMethods();
+  showToast('Kartu baru berhasil diverifikasi & disimpan!');
+}
+
+function openRemindersModal() {
+  document.getElementById('modal-reminders').style.display = 'flex';
+}
+
+function toggleReminderSetting(id) {
+  const checked = document.getElementById(id).checked;
+  showToast(checked ? 'Pengingat Aktif 🔔' : 'Pengingat Dinonaktifkan 🔕');
+}
+
+function openHistoryModal() {
+  renderHistoryList();
+  document.getElementById('modal-history').style.display = 'flex';
+}
+
+function renderHistoryList() {
+  const container = document.getElementById('tx-history-container');
+  if (!container) return;
+  if (transactionHistory.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-light); font-size:13px; font-weight:700;">Belum ada riwayat transaksi 😿</div>`;
+    return;
+  }
+
+  container.innerHTML = transactionHistory.map(tx => `
+    <div class="tx-card">
+      <div class="tx-header-row">
+        <span class="tx-id">${tx.id}</span>
+        <span class="tx-badge ${tx.status}">${tx.statusLabel}</span>
+      </div>
+      <div class="tx-title">${tx.title}</div>
+      <div class="tx-footer-row">
+        <span class="tx-date">${tx.date}</span>
+        <span class="tx-amount">${formatRupiah(tx.amount)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openSupportModal() {
+  document.getElementById('modal-support').style.display = 'flex';
+}
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const icon = btn.querySelector('.faq-icon');
+  
+  if (item.classList.contains('active')) {
+    item.classList.remove('active');
+    answer.style.maxHeight = '0';
+    icon.textContent = '＋';
+  } else {
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('active');
+      i.querySelector('.faq-answer').style.maxHeight = '0';
+      i.querySelector('.faq-icon').textContent = '＋';
+    });
+    
+    item.classList.add('active');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    icon.textContent = '✕';
+  }
+}
+
+// ══ CORE UTILITIES & RENDERING ══
+function renderCats(){
+  const scroll = document.getElementById('cat-scroll-home'); const list = document.getElementById('full-cat-list');
+  if(document.getElementById('b-cat')) document.getElementById('b-cat').innerHTML = myCats.map(c=>`<option>${c.name}</option>`).join('');
+  if(document.getElementById('hotel-pet-select')) document.getElementById('hotel-pet-select').innerHTML = myCats.map(c=>`<option>${c.name}</option>`).join('');
+  if(scroll){
+    scroll.innerHTML = myCats.map(c=>`<div class="cat-pill" onclick="openPetDetail('${c.name}')"><div class="cat-pill-icon">${c.icon}</div><div class="cat-pill-name">${c.name}</div><div class="cat-pill-breed">${c.breed}</div></div>`).join('') + `<div class="cat-add-pill" onclick="openAddPet()"><div style="font-size:28px">＋</div><div style="font-size:11px;font-weight:700">Tambah</div></div>`;
+  }
+  if(list){
+    list.innerHTML = myCats.map(c=>`<div class="pet-full-card" onclick="openPetDetail('${c.name}')"><div class="pet-avatar">${c.icon}</div><div class="pet-meta"><div class="pet-name">${c.name}</div><div class="pet-breed">${c.breed}</div><div class="pet-tags"><span class="pet-tag pt-gender">${c.gender}</span><span class="pet-tag pt-age">🎂 ${c.age}</span><span class="pet-tag pt-weight">⚖️ ${c.weight}</span></div></div></div>`).join('');
+  }
+}
+function openPetDetail(name){
+  const cat = myCats.find(c=>c.name===name); if(!cat) return;
+  document.getElementById('pet-detail-content').innerHTML = `<div style="text-align:center;padding:8px 0 20px"><div style="font-size:56px">${cat.icon}</div><div style="font-size:22px;font-weight:900;color:var(--navy);font-family:var(--font-brand);">${cat.name}</div><div style="display:flex;gap:8px;justify-content:center;margin-top:10px;"><span class="pet-tag pt-gender">${cat.gender}</span><span class="pet-tag pt-age">${cat.age}</span></div></div><button class="btn-primary" onclick="closeModal('modal-pet-detail');showPage('booking')">📅 Buat Janji</button>`;
+  document.getElementById('modal-pet-detail').style.display = 'flex';
+}
+function saveCat(){
+  const n = document.getElementById('new-cat-name').value; if(!n) return;
+  myCats.push({name:n, breed:document.getElementById('new-cat-breed').value||'Campuran', icon:'🐱', gender:document.getElementById('new-cat-gender').value, age:'1 Tahun', weight:'3.5 kg', health:[]});
+  renderCats(); closeModal('modal-add-pet'); showToast(`${n} terdaftar! 🐾`);
+}
+function closeModal(id){ document.getElementById(id).style.display='none'; if(id==='modal-success') showPage('home'); }
+function openAddPet(){ document.getElementById('modal-add-pet').style.display='flex'; }
+function formatRupiah(num){ return 'Rp ' + num.toLocaleString('id-ID'); }
+
+// ══ PAWBOT TRADITIONAL LOCAL KNOWLEDGE CHAT ENGINE ══
+
+// Basis Pengetahuan Lokal PawBot (Sistem Pengetahuan Kucing Terintegrasi)
+const pawBotKnowledge = [
+  {
+    keywords: ['halo', 'hai', 'pagi', 'siang', 'malam', 'assalamualaikum', 'permisi', 'bot', 'welcome'],
+    response: "Halo *Paw Parents!* 🐾 Aku **PawBot** 🤖, asisten setiamu di Pawfy. Ada yang bisa kubantu seputar kesehatan, makanan, atau perawatan kucing kesayanganmu hari ini? 🐱"
+  },
+  {
+    keywords: ['pipis', 'kencing', 'flutd', 'kemih', 'batu ginjal', 'susah pipis'],
+    response: "Oh no! Gejala tersebut mengarah pada **FLUTD (Feline Lower Urinary Tract Disease)** atau gangguan saluran kemih, penyakit yang sangat sering menyerang kucing jantan kebiri akibat kurang minum atau pakan tinggi garam. 😿\n\n**Tanda-tanda FLUTD:**\n• Mengejan lama di litter box tapi pipis tidak keluar atau hanya setetes.\n• Kucing mengeong kesakitan saat mencoba pipis.\n• Pipis bercampur darah (*hematuria*).\n• Menjilat area kelamin secara berlebihan.\n\n**Solusi Pertolongan Pertama:**\n1. Ganti pakan kering dengan **wet food** (makanan basah) untuk menambah asupan air.\n2. Sediakan beberapa mangkok air bersih atau gunakan pancuran air (*water fountain*).\n3. **PERINGATAN DARURAT:** Jika kucing sama sekali tidak bisa pipis selama lebih dari 24 jam, ini adalah keadaan **Darurat Medis** yang fatal (dapat memicu gagal ginjal akut). Segera daftarkan janji UGD di menu **Buat Janji 📅** atau bawa langsung ke **Pawfy Clinic Center** terdekat untuk dipasang kateter! 🏥🚨"
+  },
+  {
+    keywords: ['panleukopenia', 'distemper', 'panleu', 'parvo', 'diare berdarah', 'muntah kuning', 'busa kuning'],
+    response: "Hati-hati, Paw Parents! **Feline Panleukopenia (Distemper Kucing)** adalah virus yang sangat mematikan dengan tingkat kematian hingga 90% pada anak kucing (kitten) jika terlambat ditangani! 🙀💥\n\n**Tanda-tanda Utama Panleukopenia:**\n• Muntah cairan kuning, busa putih, atau air liur berlebih.\n• Lemas lunglai ekstrem (kucing hanya meringkuk di dekat mangkok air tanpa mau minum).\n• Diare cair berwarna gelap/kemerahan dengan bau amis yang sangat menyengat (diare berdarah).\n• Demam tinggi lalu mendadak anjlok di bawah normal (hipotermia).\n\n**Solusi Wajib:**\n• **Jangan ditunda!** Virus ini merusak sel darah putih dan usus dalam hitungan hari. Segera bawa ke klinik hewan. Kucing dehidrasi butuh dehidrasi butuh terapi cairan infus intravena (IV), obat anti-muntah, dan antibiotik sekunder.\n• **Pencegahan:** Satu-satunya cara adalah **Vaksinasi F3 (Tricat)** berkala yang bisa Anda pesan melalui menu **Buat Janji 📅** Pawfy! 💉🐱"
+  },
+  {
+    keywords: ['flu', 'bersin', 'pilek', 'ingus', 'belekan', 'mata berair', 'calici', 'sariawan'],
+    response: "Kasihan sekali si kecil! **Flu Kucing (Feline Rhinotracheitis / Calicivirus)** adalah penyakit infeksi pernapasan yang sangat menular dan sering menyerang kucing dalam kondisi imun drop. 😿🌡️\n\n**Gejala Flu Kucing:**\n• Bersin berulang kali.\n• Hidung meler (ingus bening hingga hijau kental).\n• Mata berair merah, bengkak, atau belekan parah hingga kelopak mata lengket.\n• Sariawan parah di lidah/gusi (khas Calicivirus), bikin kucing air liurnya menetes dan menolak makan.\n\n**Perawatan Mandiri di Rumah:**\n1. Bersihkan area mata dan hidung secara lembut menggunakan kapas yang dicelup air hangat steril.\n2. Lakukan terapi uap panas (*nebulizer* manual) di kamar mandi beruap hangat untuk melegakan napas.\n3. Suapi makanan basah beraroma kuat (bisa dipanaskan sebentar) karena hidung tersumbat membuat mereka kehilangan indra penciuman makanan.\n4. Berikan suplemen asam amino **L-Lysine**.\n\nJika ingus kental berwarna kuning kehijauan atau napas terdengar sesak berbunyi, segera buat janji dokter di Pawfy Clinic untuk mendapatkan resep antibiotik dan obat mata yang aman! 🏥💊"
+  },
+  {
+    keywords: ['jamur', 'scabies', 'gatal', 'ringworm', 'botak', 'ketombe', 'kerak', 'budug', 'koreng'],
+    response: "Kulit gatal dan kebotakan adalah masalah luar biasa mengganggu bagi anabul! Kemungkinan terbesar adalah **Jamuran (Ringworm)** atau **Scabies Kutu**. 🐱🧴\n\n**Perbedaan Keduanya:**\n• **Jamur/Ringworm**: Kebotakan melingkar (*patchy baldness*), kulit kering bersisik mirip ketombe, kadang kemerahan. Jamur ini bersifat zoonosis (bisa menular ke manusia!).\n• **Scabies (Budug)**: Disebabkan mikroorganisme kutu yang membuat kulit berkerak tebal, berkerut keras di tepi telinga, dahi, kelopak mata, disertai rasa gatal yang sangat parah hingga kucing terus menggaruk sampai luka koreng.\n\n**Solusi Penanganan:**\n1. Mandikan kucing secara rutin 1-2 minggu sekali dengan sampo sulfur/ketoconazole di menu **Grooming Medis** Pawfy.\n2. Oleskan salep khusus antijamur pada area botak tipis.\n3. Untuk Scabies, obat luar saja tidak cukup! Kucing membutuhkan obat tetes spot-on berkualitas tinggi (Revolution/Broadline) atau suntikan ivermectin di bawah pengawasan dokter hewan di **Pawfy Clinic Center**. 💉🐈"
+  },
+  {
+    keywords: ['cacing', 'cacingan', 'perut buncit', 'muntah cacing', 'feses cacing', 'kurus'],
+    response: "Waspada cacingan! 🐛 Kucing yang terlihat aktif pun bisa mengidap parasit usus yang menyerap nutrisi tubuhnya secara perlahan.\n\n**Gejala Cacingan:**\n• Perut terlihat buncit atau kembung keras, namun tulang punggung terasa kurus.\n• Bulu menjadi kering, kusam, kasar, dan mudah rontok.\n• Muntah atau pup yang mengeluarkan cacing hidup (berbentuk seperti mi putih atau segmen beras ketan).\n• Kucing sering menggeser-geser pantatnya di lantai karena gatal.\n\n**Langkah Solusi:**\n1. Berikan obat cacing spektrum luas khusus kucing (seperti Drontal Cat) secara disiplin.\n2. **Dosis Aturan**: 1 tablet per 4 kg berat badan. Untuk kitten, mulailah pemberian dari usia 6 minggu, lalu diulang setiap 2 minggu sampai usia 3 bulan, dan rutin setiap 3 bulan sekali saat dewasa.\n3. Basmi kutu di tubuh kucing karena kutu adalah inang perantara cacing pita! 🧼🐾"
+  },
+  {
+    keywords: ['hairball', 'muntah bulu', 'batuk', 'tersedak', 'sembelit'],
+    response: "Kucing yang sering batuk kering seolah tercekik mungkin sedang berjuang mengeluarkan **Hairball** (gumpalan bulu di pencernaan). 🐱🌀\n\n**Mengapa Terjadi?**\nKucing merawat dirinya dengan menjilat bulu (*grooming*). Kait-kait kecil di lidah membuat bulu mati tertelan ke lambung. Jika menumpuk, bulu mengeras dan menyumbat lambung.\n\n**Tanda Hairball Menyumbat:**\n• Batuk-batuk kering berulang kali seperti tersedak tanpa mengeluarkan apa pun.\n• Memuntahkan gumpalan bulu berlendir.\n• Susah buang air besar (sembelit) atau pup sangat kering.\n• Perut terasa begah, keras, dan nafsu makan merosot.\n• Lemas akibat usus tersumbat (kondisi parah).\n\n**Cara Pencegahan & Solusi:**\n1. Sisir bulu kucing setiap hari menggunakan sisir ergonomis (bisa kamu beli di **Pawfy Shop 🛍️**!) untuk mengangkat bulu rontok sebelum tertelan.\n2. Berikan gel pelumas pencahar bulu khusus (*hairball paste*) 2-3 kali seminggu.\n3. Berikan rumput gandum (*wheatgrass*) untuk merangsang mereka memuntahkan atau melancarkan pembuangan bulu lewat pup secara alami. 🌿🐈"
+  },
+  {
+    keywords: ['makan', 'pakan', 'diet', 'nutrisi', 'dry food', 'wet food', 'laper', 'lapar', 'snack'],
+    response: "Pemberian makan kucing harus disesuaikan dengan usianya ya Paw Parents! 🍽️\n\n• **Kitten (< 1 tahun)**: Butuh protein super tinggi, makan 3-4 kali sehari porsi kecil.\n• **Dewasa (1-7 tahun)**: Cukup 2 kali sehari (pagi & sore) dengan nutrisi seimbang.\n• **Senior (> 7 tahun)**: Cari pakan yang mudah dicerna & rendah lemak kalori.\n\nJangan lupa selalu sediakan air minum mengalir bersih agar ginjal kucingmu tetap sehat! 🐈💧"
+  },
+  {
+    keywords: ['biaya', 'harga', 'tarif', 'bayar', 'gopay', 'ovo', 'dana'],
+    response: "Berikut daftar estimasi tarif layanan di Pawfy: 💸\n\n• **Konsultasi Dokter Hewan**: Rp 80.000\n• **Suntik Vaksinasi**: Mulai Rp 120.000\n• **Grooming / Mandi Spa**: Mulai Rp 95.000\n• **Inap Pet Hotel**: Mulai Rp 85.000/malam\n\nKami menerima pembayaran lewat GoPay, OVO, Dana, serta Kartu Kredit utama. Atur pembayaranmu di menu **Profil** agar transaksi lebih kilat! 💳"
+  }
+];
+
+// Simple Markdown Parser Helper to format PawBot responses beautifully
+function formatMarkdown(text) {
+  if (!text) return '';
+  let html = text;
+  
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/^\s*[-*•]\s+(.*)$/gm, '• $1');
+  html = html.replace(/\n/g, '<br>');
+  
+  return html;
+}
+
+// Local Keyword Matching Algorithm (Matches user queries with our Knowledge Base)
+function getLocalBotResponse(userText) {
+  const normalizedText = userText.toLowerCase().trim();
+  
+  // Mencari kata kunci yang cocok di dalam array pengetahuan
+  for (const block of pawBotKnowledge) {
+    for (const keyword of block.keywords) {
+      if (normalizedText.includes(keyword)) {
+        return block.response;
+      }
+    }
+  }
+  
+  // Fallback Response jika tidak ada kata kunci yang cocok
+  return "Meow! 🐱 PawBot belum mengenali pertanyaan itu.\n\nCoba tanyakan menggunakan kata kunci berikut:\n• **sakit** (untuk gejala & tanda klinis)\n• **makan** (untuk nutrisi & porsi pakan)\n• **vaksin** (untuk jadwal imunisasi wajib)\n• **grooming** (untuk tips spa & mandi bulu)\n• **hotel** (untuk kamar inap Pawfy Pet Hotel)\n• **biaya** (untuk daftar tarif layanan Pawfy)\n\nPawfy selalu siap sedia membantu anabulmu! 🐾💛";
+}
+
+function initChat(){ 
+  if(chatHistory.length===0) {
+    addBotMessage('Halo! Aku **PawBot** 🤖 asisten setia dari Pawfy. Adakah hal atau gejala yang mengkhawatirkan dari kucing kesayanganmu hari ini? Tanya aku apa saja! 🐾'); 
+  } 
+}
+
+function addBotMessage(t){ 
+  chatHistory.push({role:'assistant',content:t}); 
+  renderMessages(); 
+}
+
+function addUserMessage(t){ 
+  chatHistory.push({role:'user',content:t}); 
+  renderMessages(); 
+}
+
+function renderMessages(){
+  const w = document.getElementById('chat-msgs'); 
+  if(!w) return;
+  w.innerHTML = chatHistory.map(m => `
+    <div class="msg ${m.role==='assistant'?'bot':'user'}">
+      <div class="msg-bubble">${formatMarkdown(m.content)}</div>
+    </div>
+  `).join('');
+  w.scrollTop = w.scrollHeight;
+}
+
+function showTyping(){
+  const w = document.getElementById('chat-msgs');
+  if(!w) return;
+  if(document.getElementById('typing-indicator')) return;
+  
+  const typingDiv = document.createElement('div');
+  typingDiv.id = 'typing-indicator';
+  typingDiv.className = 'msg bot';
+  typingDiv.innerHTML = `
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  w.appendChild(typingDiv);
+  w.scrollTop = w.scrollHeight;
+  
+  const indicator = document.getElementById('pawbot-status-indicator');
+  if(indicator) {
+    indicator.textContent = 'Sedang berpikir...';
+    indicator.classList.add('typing');
+  }
+  
+  const sendBtn = document.getElementById('send-btn');
+  const chatInput = document.getElementById('chat-input');
+  if (sendBtn) sendBtn.disabled = true;
+  if (chatInput) chatInput.disabled = true;
+}
+
+function hideTyping(){
+  const indicator = document.getElementById('typing-indicator');
+  if(indicator) indicator.remove();
+  
+  const status = document.getElementById('pawbot-status-indicator');
+  if(status) {
+    status.textContent = 'Siap Membantu';
+    status.classList.remove('typing');
+  }
+  
+  const sendBtn = document.getElementById('send-btn');
+  const chatInput = document.getElementById('chat-input');
+  if (sendBtn) sendBtn.disabled = false;
+  if (chatInput) {
+    chatInput.disabled = false;
+    chatInput.focus();
+  }
+}
+
+// Simulasi Alur Chatbot Lokal Instan & Interaktif
+function sendChat(){
+  if (isChatLoading) return;
+  
+  const inputEl = document.getElementById('chat-input'); 
+  const text = inputEl.value.trim(); 
+  if(!text) return;
+  
+  inputEl.value = ''; 
+  inputEl.style.height = '44px';
+  
+  addUserMessage(text); 
+  isChatLoading = true;
+  showTyping();
+  
+  // Simulasi waktu respon kecerdasan buatan (800ms - 1200ms) agar terasa natural
+  const responseDelay = 800 + Math.random() * 400;
+  
+  setTimeout(() => {
+    hideTyping();
+    isChatLoading = false;
+    
+    // Ambil jawaban dari database lokal kita
+    const botReply = getLocalBotResponse(text);
+    addBotMessage(botReply);
+  }, responseDelay);
+}
+
+function quickAsk(q){ 
+  if (isChatLoading) return;
+  document.getElementById('chat-input').value = q; 
+  sendChat(); 
+}
+
+function chatKeyDown(e){ 
+  if(e.key === 'Enter' && !e.shiftKey) { 
+    e.preventDefault(); 
+    sendChat(); 
+  } 
+}
+
+function autoGrow(el){ 
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px'; 
+}
+
+function clearChat(){ 
+  if (isChatLoading) return;
+  chatHistory = []; 
+  initChat(); 
+}
+
+// ══ TOAST SYSTEM ══
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ══ OVERLAY CLICK ══
+document.querySelectorAll('.modal-overlay').forEach(ov=>{ ov.addEventListener('click',e=>{ if(e.target===ov) ov.style.display='none'; }); });
+
+window.onload = ()=>{
+  renderCats();
+  updateUserDashboard();
+  let gi=0; setInterval(()=>{ const s = document.getElementById('gallery-scroll'); if(!s) return; gi = (gi+1)%3; s.scrollTo({left:gi*274,behavior:'smooth'}); },4000);
+};
+</script>
+</body>
+</html>
